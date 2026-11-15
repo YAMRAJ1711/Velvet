@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velvet & Ember</title>
+<style>
+  :root {
+    --bg: #0b090e;
+    --surface: #15111b;
+    --surface-2: #1f1928;
+    --border: rgba(255, 255, 255, 0.12);
+    --text: #f6f2f9;
+    --muted: #a69bb3;
+    --accent: #e11d48;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  body {
+    background: #0b090e;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+  .container { width: 100%; max-width: 520px; flex: 1; display: flex; flex-direction: column; }
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 4px 16px; border-bottom: 1px solid var(--border); margin-bottom: 18px;
+  }
+  .brand { font-weight: 800; font-size: 1.1rem; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  .lang-pills { display: flex; gap: 6px; }
+  .lang-pill {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--muted);
+    padding: 5px 10px; border-radius: 999px; font-size: 0.78rem; cursor: pointer; font-weight: 600;
+  }
+  .lang-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px; margin-bottom: 16px;
+  }
+  h1 { font-size: 1.45rem; margin-bottom: 8px; line-height: 1.3; }
+  h2 { font-size: 1.2rem; margin-bottom: 10px; line-height: 1.35; }
+  p.sub { color: var(--muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 16px; }
+  .lang-grid { display: flex; flex-direction: column; gap: 12px; }
+  .lang-card {
+    width: 100%; text-align: left; color: var(--text);
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px; display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; font-size: 1rem;
+  }
+  .lang-card strong { font-size: 1.08rem; display: block; }
+  .lang-card small { color: var(--muted); font-size: 0.8rem; }
+  label.field-label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; }
+  input[type="text"] {
+    width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+    padding: 13px; border-radius: 12px; font-size: 1rem; margin-bottom: 16px; outline: none;
+  }
+  .colors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  .color-opt {
+    background: var(--surface-2); border: 2px solid transparent; border-radius: 12px;
+    padding: 10px 6px; text-align: center; cursor: pointer; font-size: 0.8rem; font-weight: 600;
+  }
+  .color-opt.selected { border-color: #fff; background: rgba(255,255,255,0.08); }
+  .swatch { width: 22px; height: 22px; border-radius: 50%; margin: 0 auto 6px; }
+  .btn {
+    width: 100%; padding: 14px; border-radius: 12px; border: none; font-size: 0.96rem;
+    font-weight: 700; cursor: pointer; display: block; text-align: center; margin-bottom: 10px;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+  .btn-wa { background: #22c55e; color: #052e16; }
+  .progress-wrap { background: var(--surface-2); height: 6px; border-radius: 99px; overflow: hidden; margin-bottom: 14px; }
+  .progress-bar { height: 100%; background: var(--accent); transition: width 0.2s; }
+  .q-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; font-weight: 600; }
+  .options { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .opt-btn {
+    text-align: left; background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+    padding: 14px; border-radius: 12px; font-size: 0.95rem; cursor: pointer; line-height: 1.4;
+  }
+  .room-box {
+    background: var(--surface-2); border: 1px dashed var(--border); border-radius: 12px;
+    padding: 14px; text-align: center; margin: 14px 0; word-break: break-all; font-size: 0.82rem; color: var(--muted);
+  }
+  .room-code { font-size: 1.35rem; font-weight: 800; color: var(--text); letter-spacing: 2px; display: block; margin-bottom: 4px; }
+  .countdown-num { font-size: 4rem; font-weight: 900; text-align: center; color: var(--accent); margin: 20px 0; }
+  .score-ring {
+    width: 128px; height: 128px; border-radius: 50%; margin: 10px auto 16px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border: 6px solid var(--accent); background: var(--surface-2);
+  }
+  .score-ring strong { font-size: 2rem; line-height: 1; }
+  .score-ring span { font-size: 0.72rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; }
+  .reward-card {
+    background: rgba(225,29,72,0.14); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 14px; padding: 15px; margin: 14px 0;
+  }
+  .reward-badge {
+    display: inline-block; background: var(--accent); color: #fff; font-size: 0.7rem;
+    font-weight: 800; padding: 3px 9px; border-radius: 999px; margin-bottom: 6px;
+  }
+  .comp-item {
+    background: var(--surface-2); border-radius: 12px; padding: 12px; margin-bottom: 10px;
+    border-left: 4px solid var(--border);
+  }
+  .comp-item.match { border-left-color: #22c55e; }
+  .comp-q { font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; }
+  .comp-row { display: flex; gap: 8px; font-size: 0.82rem; }
+  .pill-ans { flex: 1; padding: 7px 9px; border-radius: 8px; background: rgba(0,0,0,0.3); }
+  .hidden { display: none !important; }
+  footer { text-align: center; font-size: 0.75rem; color: var(--muted); padding: 12px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="brand"><span class="dot"></span> VELVET &amp; EMBER</div>
+    <div class="lang-pills">
+      <button type="button" class="lang-pill active" id="pill-en" onclick="setLang('en')">EN</button>
+      <button type="button" class="lang-pill" id="pill-gu" onclick="setLang('gu')">ગુજ</button>
+      <button type="button" class="lang-pill" id="pill-hi" onclick="setLang('hi')">हिन्दी</button>
+    </div>
+  </header>
+
+  <!-- VIEW 0: VISIBLE BY DEFAULT -->
+  <section id="view-lang" class="card">
+    <h1>Choose Your Language<br><span style="font-size:1rem;color:var(--muted)">ભાષા પસંદ કરો • भाषा चुनें</span></h1>
+    <p class="sub">Select your language to start the private 18+ intimacy &amp; desire check.</p>
+    <div class="lang-grid">
+      <button type="button" class="lang-card" onclick="chooseInitialLang('en')">
+        <div><strong>English</strong><small>Continue in English</small></div>
+        <span>→</span>
+      </button>
+      <button type="button" class="lang-card" onclick="chooseInitialLang('gu')">
+        <div><strong>ગુજરાતી (Gujarati)</strong><small>ગુજરાતીમાં આગળ વધો</small></div>
+        <span>→</span>
+      </button>
+      <button type="button" class="lang-card" onclick="chooseInitialLang('hi')">
+        <div><strong>हिन्दी (Hindi)</strong><small>हिन्दी में आगे बढ़ें</small></div>
+        <span>→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- VIEW 1: SETUP -->
+  <section id="view-setup" class="card hidden">
+    <div id="invite-banner" class="reward-card hidden" style="margin-top:0">
+      <span class="reward-badge" id="txt-invited-badge">PARTNER INVITE</span>
+      <p id="txt-invited-msg" style="font-size:0.9rem;line-height:1.4"></p>
+    </div>
+    <h1 id="txt-setup-title">Your Profile</h1>
+    <p class="sub" id="txt-setup-sub">Enter your name and pick a signature color before starting.</p>
+
+    <label class="field-label" id="txt-name-label">Your Name</label>
+    <input type="text" id="inp-name" maxlength="24" placeholder="e.g. Alex">
+
+    <label class="field-label" id="txt-color-label">Signature Color</label>
+    <div class="colors" id="color-grid"></div>
+
+    <button type="button" class="btn btn-primary" id="btn-start" onclick="startQuiz()">Start 5 Questions →</button>
+    <button type="button" class="btn btn-secondary" id="btn-passplay" onclick="startPassAndPlay()">Pass &amp; Play (Same Phone)</button>
+  </section>
+
+  <!-- VIEW 2: QUIZ -->
+  <section id="view-quiz" class="card hidden">
+    <div class="q-meta">
+      <span id="q-player-tag">Partner 1</span>
+      <span id="q-counter">1 / 5</span>
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="q-progress" style="width:20%"></div></div>
+    <div style="font-size:0.75rem;color:var(--accent);font-weight:700;text-transform:uppercase;margin-bottom:4px" id="q-cat"></div>
+    <h2 id="q-text"></h2>
+    <div class="options" id="q-options"></div>
+  </section>
+
+  <!-- VIEW 3: WAITING / SHARE -->
+  <section id="view-share" class="card hidden">
+    <h1 id="txt-share-title">Your Answers Are Sealed</h1>
+    <p class="sub" id="txt-share-sub">Keep this screen open! Send the link on WhatsApp — as soon as your partner finishes, both phones reveal the match together.</p>
+
+    <div class="room-box">
+      <span class="room-code" id="share-room-code">VE-0000</span>
+      <div style="color:#22c55e;font-weight:700;margin-top:6px" id="txt-live-listening">● Live Sync Active — Waiting for Partner...</div>
+    </div>
+
+    <button type="button" class="btn btn-wa" id="btn-wa-share" onclick="shareWhatsApp()">Share on WhatsApp</button>
+    <button type="button" class="btn btn-primary" id="btn-copy-link" onclick="copyShareLink()">Copy Direct Link</button>
+    <button type="button" class="btn btn-secondary" id="btn-check-sync" onclick="checkSyncManual()">Refresh / Check Partner Status</button>
+  </section>
+
+  <!-- VIEW 3.5: COUNTDOWN -->
+  <section id="view-reveal" class="card hidden" style="text-align:center">
+    <span class="reward-badge" id="txt-both-done">BOTH PARTNERS READY</span>
+    <h1 id="txt-revealing">Unlocking Results Together...</h1>
+    <div class="countdown-num" id="countdown-num">3</div>
+  </section>
+
+  <!-- VIEW 4: RESULTS -->
+  <section id="view-result" class="card hidden">
+    <h1 style="text-align:center" id="txt-res-title">Lust &amp; Intimacy Match</h1>
+    <p class="sub" style="text-align:center;margin-bottom:8px" id="res-names"></p>
+
+    <div class="score-ring">
+      <strong id="res-pct">0%</strong>
+      <span id="txt-alignment">Alignment</span>
+    </div>
+
+    <div class="reward-card">
+      <span class="reward-badge" id="reward-tier">UNLOCKED REWARD</span>
+      <h2 id="reward-title" style="font-size:1.05rem;margin-bottom:4px"></h2>
+      <p id="reward-desc" style="font-size:0.88rem;line-height:1.45"></p>
+    </div>
+
+    <div id="comp-list"></div>
+
+    <button type="button" class="btn btn-wa" id="btn-res-wa" onclick="shareResultWhatsApp()">Send Results Link on WhatsApp</button>
+    <button type="button" class="btn btn-secondary" id="btn-new-round" onclick="resetForNewRound()">Play New Question Set</button>
+  </section>
+
+  <footer id="sync-status">Velvet &amp; Ember • Ready</footer>
+</div>
+
+<script>
+const COLORS = [
+  { hex: '#e11d48', en: 'Crimson', gu: 'કિરમજી', hi: 'सिंदूरी' },
+  { hex: '#9333ea', en: 'Plum', gu: 'જાંબલી', hi: 'बैंगनी' },
+  { hex: '#d97706', en: 'Amber', gu: 'સોનેરી', hi: 'सुनहरा' },
+  { hex: '#059669', en: 'Emerald', gu: 'લીલો', hi: 'पन्ना' },
+  { hex: '#2563eb', en: 'Sapphire', gu: 'નીલો', hi: 'नीलम' },
+  { hex: '#db2777', en: 'Pink', gu: 'ગુલાબી', hi: 'गुलाबी' }
+];
+
+const UI = {
+  en: {
+    setupTitle: "Your Profile",
+    setupSub: "Enter your name and pick a signature color before starting.",
+    nameLabel: "Your Name",
+    namePh: "e.g. Alex",
+    colorLabel: "Signature Color",
+    startBtn: "Start 5 Questions →",
+    passPlay: "Pass & Play (Same Phone)",
+    invitedBadge: "PARTNER INVITE",
+    invitedMsg: "{name} sealed their 5 answers. Enter your details to unlock your match!",
+    shareTitle: "Your Answers Are Sealed",
+    shareSub: "Keep this screen open! Send the link on WhatsApp — as soon as your partner finishes, both phones reveal the match together.",
+    liveListening: "● Live Sync Active — Waiting for Partner...",
+    bothDone: "BOTH PARTNERS READY",
+    revealing: "Unlocking Results Together...",
+    waShare: "Share on WhatsApp",
+    copyLink: "Copy Direct Link",
+    copied: "Link Copied!",
+    checkSync: "Refresh / Check Partner Status",
+    waitingToast: "Waiting for partner to finish...",
+    resTitle: "Lust & Intimacy Match",
+    alignment: "Alignment",
+    resWa: "Send Results Link on WhatsApp",
+    newRound: "Play New Question Set",
+    partner1: "Partner 1",
+    partner2: "Partner 2",
+    waText: "I sealed my 5 answers on Velvet & Ember! Open this link so we unlock our match together: ",
+    waResText: "Our Velvet & Ember Match is {pct}%! View our comparison & unlocked challenge here: "
+  },
+  gu: {
+    setupTitle: "તમારી પ્રોફાઇલ",
+    setupSub: "શરૂ કરતા પહેલા તમારું નામ લખો અને તમારો મનપસંદ રંગ પસંદ કરો.",
+    nameLabel: "તમારું નામ",
+    namePh: "દા.ત. આરવ",
+    colorLabel: "તમારો ખાસ રંગ",
+    startBtn: "૫ પ્રશ્નો શરૂ કરો →",
+    passPlay: "એક જ ફોનમાં સાથે રમો",
+    invitedBadge: "પાર્ટનરનું આમંત્રણ",
+    invitedMsg: "{name} એ પોતાના ૫ જવાબો લોક કર્યા છે. તમારું મેચ જોવા તમારી વિગતો ભરો!",
+    shareTitle: "તમારા જવાબો સુરક્ષિત છે",
+    shareSub: "આ સ્ક્રીન ખુલ્લી રાખો! WhatsApp પર લિંક મોકલો — પાર્ટનર જવાબ આપશે એટલે બંનેના ફોનમાં સાથે પરિણામ ખુલશે.",
+    liveListening: "● લાઇવ સિંક ચાલુ છે — પાર્ટનરની રાહ જોવાઈ રહી છે...",
+    bothDone: "બંને તૈયાર છે!",
+    revealing: "સાથે પરિણામ ખુલી રહ્યું છે...",
+    waShare: "WhatsApp પર શેર કરો",
+    copyLink: "ડાયરેક્ટ લિંક કોપી કરો",
+    copied: "લિંક કોપી થઈ ગઈ!",
+    checkSync: "પાર્ટનરનું સ્ટેટસ ચેક કરો",
+    waitingToast: "પાર્ટનરના જવાબની રાહ જોવાઈ રહી છે...",
+    resTitle: "પ્રેમ અને ઇચ્છાનું મેચિંગ",
+    alignment: "મેચ સ્કોર",
+    resWa: "પરિણામની લિંક WhatsApp પર મોકલો",
+    newRound: "નવા પ્રશ્નો સાથે ફરી રમો",
+    partner1: "પાર્ટનર ૧",
+    partner2: "પાર્ટનર ૨",
+    waText: "મેં Velvet & Ember પર મારા ૫ જવાબો લોક કર્યા છે! લિંક ખોલીને જવાબ આપો જેથી આપણું પરિણામ સાથે ખુલે: ",
+    waResText: "આપણું Velvet & Ember મેચ {pct}% આવ્યું છે! અહીં ક્લિક કરીને પૂરું પરિણામ જુઓ: "
+  },
+  hi: {
+    setupTitle: "आपकी प्रोफ़ाइल",
+    setupSub: "शुरू करने से पहले अपना नाम लिखें और अपना पसंदीदा रंग चुनें।",
+    nameLabel: "आपका नाम",
+    namePh: "जैसे: आरव",
+    colorLabel: "सिग्नेचर रंग",
+    startBtn: "5 सवाल शुरू करें →",
+    passPlay: "एक ही फ़ोन पर साथ खेलें",
+    invitedBadge: "पार्टनर का आमंत्रण",
+    invitedMsg: "{name} ने अपने 5 जवाब लॉक कर दिए हैं। अपना मैच देखने के लिए अपनी जानकारी भरें!",
+    shareTitle: "आपके जवाब लॉक हो गए हैं",
+    shareSub: "यह स्क्रीन खुली रखें! WhatsApp पर लिंक भेजें — पार्टनर के जवाब देते ही दोनों फ़ोन पर एक साथ रिज़ल्ट खुलेगा।",
+    liveListening: "● लाइव सिंक चालू है — पार्टनर का इंतज़ार है...",
+    bothDone: "दोनों पार्टनर तैयार!",
+    revealing: "एक साथ रिज़ल्ट खुल रहा है...",
+    waShare: "WhatsApp पर शेयर करें",
+    copyLink: "डायरेक्ट लिंक कॉपी करें",
+    copied: "लिंक कॉपी हो गया!",
+    checkSync: "पार्टनर का स्टेटस चेक करें",
+    waitingToast: "पार्टनर के जवाब का इंतज़ार है...",
+    resTitle: "लस्ट और इंटीमेसी मैच",
+    alignment: "अलाइनमेंट",
+    resWa: "रिज़ल्ट लिंक WhatsApp पर भेजें",
+    newRound: "नए सवालों के साथ फिर खेलें",
+    partner1: "पार्टनर 1",
+    partner2: "पार्टनर 2",
+    waText: "मैंने Velvet & Ember पर अपने 5 जवाब लॉक कर दिए हैं! लिंक खोलकर जवाब दें ताकि हमारा रिज़ल्ट एक साथ खुले: ",
+    waResText: "हमारा Velvet & Ember मैच {pct}% आया है! पूरा रिज़ल्ट और चैलेंज यहाँ देखें: "
+  }
+};
+
+const QUESTIONS = [
+  { id: 'Q101', cat: {en:'Turn-Ons', gu:'આકર્ષણ', hi:'आकर्षण'},
+    q: {en:'What sparks instant heat for you?', gu:'તમારામાં તરત જ ઉત્તેજના શું જગાડે છે?', hi:'आपमें तुरंत गर्माहट क्या जगाता है?'},
+    opts: {
+      en:['Neck kisses & close touch','Dirty whispers in the ear','Bold eye contact & teasing','Spontaneous rough pull'],
+      gu:['ગરદન પર કિસ અને સ્પર્શ','કાનમાં રોમેન્ટિક વાતો','આંખોનો ઇશારો અને છેડછાડ','અચાનક નજીક ખેંચી લેવું'],
+      hi:['गर्दन पर किस और स्पर्श','कान में शरारती फुसफुसाहट','गहरी नज़रें और छेड़छाड़','अचानक करीब खींच लेना']
+    }
+  },
+  { id: 'Q102', cat: {en:'Turn-Ons', gu:'આકર્ષણ', hi:'आकर्षण'},
+    q: {en:'Which mood turns you on fastest?', gu:'કયો માહોલ તમને સૌથી ઝડપથી મૂડમાં લાવે છે?', hi:'कौन-सा माहौल आपको सबसे तेज़ी से मूड में लाता है?'},
+    opts: {
+      en:['Late-night dim lights','Morning sleepy cuddles','Steamy shower together','Flirty texts all day'],
+      gu:['મોડી રાતની ઝાંખી લાઇટ','સવારની આળસુ બાથ','સાથે ગરમ શાવર','આખો દિવસ ફ્લર્ટી મેસેજ'],
+      hi:['देर रात की धीमी रोशनी','सुबह की अलसाई बाहें','साथ में स्टीमी शॉवर','दिन भर फ़्लर्टी मैसेज']
+    }
+  },
+  { id: 'Q201', cat: {en:'Control', gu:'નિયંત્રણ', hi:'नियंत्रण'},
+    q: {en:'Who takes charge tonight?', gu:'આજની રાતે કોણ કમાન સંભાળે?', hi:'आज रात कमान कौन संभाले?'},
+    opts: {
+      en:['I want full control','Take control of me','Switch halfway through','Wild equal tug-of-war'],
+      gu:['હું પૂરો કંટ્રોલ રાખું','તમે મને કંટ્રોલ કરો','વચ્ચે રોલ બદલીએ','બંને બરાબર જોશમાં'],
+      hi:['मैं पूरा कंट्रोल रखूँ','आप मुझे कंट्रोल करें','बीच में रोल बदलें','दोनों बराबर जोश में']
+    }
+  },
+  { id: 'Q202', cat: {en:'Control', gu:'નિયંત્રણ', hi:'नियंत्रण'},
+    q: {en:'How should clothes come off?', gu:'કપડાં કેવી રીતે ઉતરવા જોઈએ?', hi:'कपड़े कैसे उतरने चाहिए?'},
+    opts: {
+      en:['Slow tease piece by piece','Ripped off in a rush','You undress me slowly','Keep something sexy on'],
+      gu:['ધીમે ધીમે ચીડવીને','ઉતાવળમાં તરત જ','તમે મને ધીમેથી ઉતારો','કંઈક સેક્સી પહેરી રાખીએ'],
+      hi:['धीरे-धीरे चिढ़ाते हुए','जल्दबाज़ी में तुरंत','आप मुझे धीरे से उतारें','कुछ सेक्सी पहने रखें']
+    }
+  },
+  { id: 'Q301', cat: {en:'Intensity', gu:'તીવ્રતા', hi:'तीव्रता'},
+    q: {en:'Preferred pace in bed?', gu:'બેડમાં તમને કેવી ગતિ ગમે છે?', hi:'बेड में आपको कैसी रफ़्तार पसंद है?'},
+    opts: {
+      en:['Slow, deep & sensual','Fast, hard & breathless','Teasing edge & build-up','Multiple rounds all night'],
+      gu:['ધીમી, ઊંડી અને રોમેન્ટિક','ઝડપી અને શ્વાસ રોકી દે તેવી','ધીમે ધીમે ઉત્તેજના વધારવી','આખી રાત અનેક રાઉન્ડ'],
+      hi:['धीमी, गहरी और सेंसुअल','तेज़ और साँसें रोक देने वाली','धीरे-धीरे चरम तक ले जाना','पूरी रात कई राउंड']
+    }
+  },
+  { id: 'Q302', cat: {en:'Intensity', gu:'તીવ્રતા', hi:'तीव्रता'},
+    q: {en:'Foreplay duration tonight?', gu:'આજે ફોરપ્લે કેટલો સમય ચાલવો જોઈએ?', hi:'आज फ़ोरप्ले कितनी देर चलना चाहिए?'},
+    opts: {
+      en:['30+ mins pure teasing','15 mins warm-up','5 mins then straight in','Foreplay is the main event'],
+      gu:['૩૦+ મિનિટ ભરપૂર છેડછાડ','૧૫ મિનિટ વોર્મ-અપ','૫ મિનિટ પછી સીધું શરૂ','ફોરપ્લે જ મુખ્ય મજા છે'],
+      hi:['30+ मिनट भरपूर छेड़छाड़','15 मिनट वॉर्म-अप','5 मिनट बाद सीधा शुरू','फ़ोरप्ले ही असली मज़ा है']
+    }
+  },
+  { id: 'Q401', cat: {en:'Fantasy', gu:'ફેન્ટસી', hi:'फ़ैंटेसी'},
+    q: {en:'Pick one thrill to try soon:', gu:'જલ્દી ટ્રાય કરવા માટે એક રોમાંચ પસંદ કરો:', hi:'जल्द ट्राई करने के लिए एक रोमांच चुनें:'},
+    opts: {
+      en:['Blindfold sensory play','Mirror view while together','Risky semi-public thrill','Roleplay strangers at a bar'],
+      gu:['આંખે પાટા બાંધી સ્પર્શ','અરીસા સામે સાથે રહેવું','થોડું રિસ્કી અને રોમાંચક સ્થળ','અજાણ્યા બનીને રોલપ્લે'],
+      hi:['आँखों पर पट्टी बांधकर स्पर्श','आईने के सामने साथ होना','थोड़ी रिस्की जगह का रोमांच','अजनबी बनकर रोलप्ले']
+    }
+  },
+  { id: 'Q402', cat: {en:'Fantasy', gu:'ફેન્ટસી', hi:'फ़ैंटेसी'},
+    q: {en:'Favorite spot outside the bed?', gu:'બેડ સિવાય તમારી મનપસંદ જગ્યા?', hi:'बेड के अलावा आपकी पसंदीदा जगह?'},
+    opts: {
+      en:['Pressed against the wall','Kitchen counter / couch','Steamy bathroom mirror','Backseat on a night drive'],
+      gu:['દીવાલના ટેકે ઊભા રહીને','કિચન કાઉન્ટર કે સોફા પર','બાથરૂમના અરીસા પાસે','નાઇટ ડ્રાઇવમાં કારની સીટ પર'],
+      hi:['दीवार से सटकर खड़े हुए','किचन काउंटर या सोफ़े पर','बाथरूम के आईने के पास','नाइट ड्राइव में कार की सीट पर']
+    }
+  },
+  { id: 'Q501', cat: {en:'Afterglow', gu:'આફ્ટરગ્લો', hi:'आफ़्टरग्लो'},
+    q: {en:'Right after climax, you want:', gu:'ચરમસીમા પછી તરત જ તમને શું ગમે?', hi:'चरमसुख के तुरंत बाद आपको क्या चाहिए?'},
+    opts: {
+      en:['Tangled skin-to-skin cuddle','Round two after 5 mins','Playful laughs & snacks','Pass out in each other’s arms'],
+      gu:['એકબીજામાં વીંટળાઈને સૂવું','૫ મિનિટમાં બીજો રાઉન્ડ','મજાક-મસ્તી અને નાસ્તો','એકબીજાની બાહોમાં ઊંઘી જવું'],
+      hi:['एक-दूसरे से लिपटे रहना','5 मिनट बाद दूसरा राउंड','हँसी-मज़ाक और स्नैक्स','एक-दूसरे की बाहों में सो जाना']
+    }
+  },
+  { id: 'Q502', cat: {en:'Afterglow', gu:'આફ્ટરગ્લો', hi:'आफ़्टरग्लो'},
+    q: {en:'Best way to end a passionate night?', gu:'રોમાંચક રાત પૂરી કરવાની શ્રેષ્ઠ રીત?', hi:'पैशनेट रात खत्म करने का बेस्ट तरीका?'},
+    opts: {
+      en:['Long slow kisses in the dark','Warm massage & oil','Pillow talk secrets','Showering together'],
+      gu:['અંધારામાં લાંબી ધીમી કિસ','હૂંફાળું મસાજ','ઓશીકા પર દિલની વાતો','સાથે શાવર લેવો'],
+      hi:['अँधेरे में लंबी धीमी किस','गर्म मसाज','तकिये पर दिल की बातें','साथ में शॉवर लेना']
+    }
+  }
+];
+
+const REWARDS = {
+  en: [
+    { min: 90, tier: "90%+ SOUL & FIRE MATCH", title: "Handwritten Love Letter + Full Date Takeover", desc: "Exchange a heartfelt handwritten love note tonight, and plan a surprise romantic evening from start to finish." },
+    { min: 80, tier: "80%+ HIGH VOLTAGE MATCH", title: "Surprise Romantic Date Night", desc: "Plan an uninterrupted candlelit date night or late-night drive with each other's favorite playlist and zero phones." },
+    { min: 70, tier: "70%+ SPARK & CHEMISTRY", title: "Flirtatious 30-Second Voice Note", desc: "Send each other a slow, whispered 30-second voice note describing what you adore most about their touch and energy." },
+    { min: 60, tier: "60%+ MAGNETIC ATTRACTION", title: "Charming Mood Selfie Exchange", desc: "Send each other a stylish, dressed-up selfie right now with a one-line compliment to set the mood for tonight." },
+    { min: 0,  tier: "COMPLEMENTARY SPARK", title: "10-Minute Uninterrupted Eye-Contact & Talk", desc: "Sit together tonight without screens for 10 minutes and share one new thing you want to explore together." }
+  ],
+  gu: [
+    { min: 90, tier: "૯૦%+ અદભૂત કેમિસ્ટ્રી", title: "હાથથી લખેલો પ્રેમપત્ર + સરપ્રાઇઝ ડેટ", desc: "આજે રાત્રે એકબીજાને પ્રેમભર્યો પત્ર આપો અને એક ખાસ સરપ્રાઇઝ રોમેન્ટિક ડેટ પ્લાન કરો." },
+    { min: 80, tier: "૮૦%+ હાઇ વોલ્ટેજ મેચ", title: "સરપ્રાઇઝ રોમેન્ટિક ડેટ નાઇટ", desc: "ફોન બાજુ પર મૂકીને મનપસંદ ગીતો સાથે કેન્ડલલાઇટ ડિનર અથવા લોંગ નાઇટ ડ્રાઇવ પર જાઓ." },
+    { min: 70, tier: "૭૦%+ જબરદસ્ત આકર્ષણ", title: "૩૦ સેકન્ડની રોમેન્ટિક વોઇસ નોટ", desc: "એકબીજાને ૩૦ સેકન્ડની ધીમી, પ્રેમભરી વોઇસ નોટ મોકલીને જણાવો કે તમને તેમની કઈ વાત સૌથી વધુ ગમે છે." },
+    { min: 60, tier: "૬૦%+ ખાસ કનેક્શન", title: "ક્યૂટ સેલ્ફી અને કોમ્પ્લિમેન્ટ", desc: "અત્યારે જ એકબીજાને તમારી સરસ તૈયાર થયેલી સેલ્ફી અને એક રોમેન્ટિક કોમ્પ્લિમેન્ટ મોકલો." },
+    { min: 0,  tier: "નવી શરૂઆત", title: "૧૦ મિનિટ દિલની વાત", desc: "આજે રાત્રે સ્ક્રીન વગર ૧૦ મિનિટ સાથે બેસો અને એકબીજાની પસંદ-નાપસંદ વિશે ખુલીને વાત કરો." }
+  ],
+  hi: [
+    { min: 90, tier: "90%+ जबरदस्त केमिस्ट्री", title: "हाथ से लिखा लव लेटर + सरप्राइज़ डेट", desc: "आज रात एक-दूसरे को प्यार भरा लेटर दें और एक खास सरप्राइज़ रोमांटिक डेट प्लान करें।" },
+    { min: 80, tier: "80%+ हाई वोल्टेज मैच", title: "सरप्राइज़ रोमांटिक डेट नाइट", desc: "फ़ोन दूर रखकर पसंदीदा गानों के साथ कैंडललाइट डिनर या लॉन्ग नाइट ड्राइव पर जाएँ।" },
+    { min: 70, tier: "70%+ गहरा आकर्षण", title: "30 सेकंड का रोमांटिक वॉइस नोट", desc: "एक-दूसरे को 30 सेकंड का धीमा, प्यार भरा वॉइस नोट भेजकर बताएँ कि आपको उनकी कौन-सी बात सबसे ज़्यादा पसंद है।" },
+    { min: 60, tier: "60%+ मैग्नेटिक कनेक्शन", title: "क्यूट सेल्फ़ी और कॉम्प्लिमेंट", desc: "अभी एक-दूसरे को अपनी एक प्यारी-सी तैयार हुई सेल्फ़ी और एक रोमांटिक कॉम्प्लिमेंट भेजें।" },
+    { min: 0,  tier: "नया रोमांच", title: "10 मिनट दिल की बात", desc: "आज रात बिना फ़ोन के 10 मिनट साथ बैठें और एक-दूसरे की पसंद के बारे में खुलकर बात करें।" }
+  ]
+};
+
+const BLOB_API = "https://jsonblob.com/api/jsonBlob";
+let state = {
+  lang: 'en',
+  roomId: null,
+  blobId: null,
+  mode: 'online',
+  role: 'p1',
+  qIds: [],
+  p1: { name: '', color: '#e11d48', answers: [] },
+  p2: { name: '', color: '#7c3aed', answers: [] },
+  curIdx: 0,
+  selectedColor: '#e11d48',
+  pollTimer: null,
+  revealed: false
+};
+
+function fetchWithTimeout(url, options, ms) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), ms || 2500);
+  return fetch(url, Object.assign({}, options, { signal: controller.signal }))
+    .finally(() => clearTimeout(id));
+}
+
+function showView(id) {
+  ['view-lang', 'view-setup', 'view-quiz', 'view-share', 'view-reveal', 'view-result'].forEach(v => {
+    const el = document.getElementById(v);
+    if (el) el.classList.toggle('hidden', v !== id);
+  });
+}
+
+function setLang(l) {
+  state.lang = UI[l] ? l : 'en';
+  ['en', 'gu', 'hi'].forEach(code => {
+    const p = document.getElementById('pill-' + code);
+    if (p) p.classList.toggle('active', code === state.lang);
+  });
+  applyTranslations();
+}
+
+function chooseInitialLang(l) {
+  setLang(l);
+  renderColorGrid();
+  showView('view-setup');
+}
+
+function applyTranslations() {
+  const t = UI[state.lang] || UI.en;
+  document.getElementById('txt-setup-title').textContent = t.setupTitle;
+  document.getElementById('txt-setup-sub').textContent = t.setupSub;
+  document.getElementById('txt-name-label').textContent = t.nameLabel;
+  document.getElementById('inp-name').placeholder = t.namePh;
+  document.getElementById('txt-color-label').textContent = t.colorLabel;
+  document.getElementById('btn-start').textContent = t.startBtn;
+  document.getElementById('btn-passplay').textContent = t.passPlay;
+  document.getElementById('txt-invited-badge').textContent = t.invitedBadge;
+  if (state.role === 'p2' && state.p1.name) {
+    document.getElementById('txt-invited-msg').textContent = t.invitedMsg.replace('{name}', state.p1.name);
+  }
+  document.getElementById('txt-share-title').textContent = t.shareTitle;
+  document.getElementById('txt-share-sub').textContent = t.shareSub;
+  document.getElementById('txt-live-listening').textContent = t.liveListening;
+  document.getElementById('txt-both-done').textContent = t.bothDone;
+  document.getElementById('txt-revealing').textContent = t.revealing;
+  document.getElementById('btn-wa-share').textContent = t.waShare;
+  document.getElementById('btn-copy-link').textContent = t.copyLink;
+  document.getElementById('btn-check-sync').textContent = t.checkSync;
+  document.getElementById('txt-res-title').textContent = t.resTitle;
+  document.getElementById('txt-alignment').textContent = t.alignment;
+  document.getElementById('btn-res-wa').textContent = t.resWa;
+  document.getElementById('btn-new-round').textContent = t.newRound;
+  renderColorGrid();
+}
+
+function renderColorGrid() {
+  const grid = document.getElementById('color-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  COLORS.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'color-opt' + (state.selectedColor === c.hex ? ' selected' : '');
+    div.innerHTML = '<div class="swatch" style="background:' + c.hex + '"></div>' + (c[state.lang] || c.en);
+    div.onclick = () => {
+      state.selectedColor = c.hex;
+      document.documentElement.style.setProperty('--accent', c.hex);
+      renderColorGrid();
+    };
+    grid.appendChild(div);
+  });
+}
+
+function pickFreshQuestions() {
+  let seen = [];
+  try { seen = JSON.parse(localStorage.getItem('ve_seen_q') || '[]'); } catch(e) {}
+  const cats = ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'];
+  for (let i = cats.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cats[i], cats[j]] = [cats[j], cats[i]];
+  }
+  const chosen = [];
+  cats.forEach(prefix => {
+    const pool = QUESTIONS.filter(q => q.id.startsWith(prefix));
+    let unseen = pool.filter(q => !seen.includes(q.id));
+    if (!unseen.length) unseen = pool;
+    const pick = unseen[Math.floor(Math.random() * unseen.length)];
+    chosen.push(pick.id);
+    seen.push(pick.id);
+  });
+  if (seen.length > 8) seen = seen.slice(-5);
+  try { localStorage.setItem('ve_seen_q', JSON.stringify(seen)); } catch(e) {}
+  return chosen;
+}
+
+function startPassAndPlay() {
+  state.mode = 'passplay';
+  startQuiz();
+}
+
+function startQuiz() {
+  const t = UI[state.lang] || UI.en;
+  const rawName = document.getElementById('inp-name').value.trim();
+  const fallback = state.role === 'p1' ? t.partner1 : t.partner2;
+  const name = rawName || fallback;
+
+  if (state.role === 'p1') {
+    state.p1 = { name: name, color: state.selectedColor, answers: [] };
+    if (!state.qIds.length) state.qIds = pickFreshQuestions();
+    if (!state.roomId) state.roomId = 'VE' + Math.random().toString(36).substring(2, 7).toUpperCase();
+  } else {
+    state.p2 = { name: name, color: state.selectedColor, answers: [] };
+  }
+  state.curIdx = 0;
+  showView('view-quiz');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const qObj = QUESTIONS.find(x => x.id === state.qIds[state.curIdx]) || QUESTIONS[state.curIdx];
+  const activePlayer = state.role === 'p1' ? state.p1 : state.p2;
+  document.documentElement.style.setProperty('--accent', activePlayer.color);
+  document.getElementById('q-player-tag').textContent = activePlayer.name;
+  document.getElementById('q-counter').textContent = (state.curIdx + 1) + ' / ' + state.qIds.length;
+  document.getElementById('q-progress').style.width = (((state.curIdx + 1) / state.qIds.length) * 100) + '%';
+  document.getElementById('q-cat').textContent = qObj.cat[state.lang] || qObj.cat.en;
+  document.getElementById('q-text').textContent = qObj.q[state.lang] || qObj.q.en;
+
+  const optsDiv = document.getElementById('q-options');
+  optsDiv.innerHTML = '';
+  const list = qObj.opts[state.lang] || qObj.opts.en;
+  list.forEach((optText, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'opt-btn';
+    btn.textContent = optText;
+    btn.onclick = () => selectAnswer(idx);
+    optsDiv.appendChild(btn);
+  });
+}
+
+async function selectAnswer(optIdx) {
+  if (state.role === 'p1') state.p1.answers.push(optIdx);
+  else state.p2.answers.push(optIdx);
+
+  if (state.curIdx + 1 < state.qIds.length) {
+    state.curIdx++;
+    renderQuestion();
+    return;
+  }
+
+  if (state.mode === 'passplay' && state.role === 'p1') {
+    state.role = 'p2';
+    state.selectedColor = COLORS.find(c => c.hex !== state.p1.color).hex;
+    document.getElementById('inp-name').value = '';
+    document.getElementById('invite-banner').classList.remove('hidden');
+    document.getElementById('txt-invited-msg').textContent = (UI[state.lang]||UI.en).invitedMsg.replace('{name}', state.p1.name);
+    document.getElementById('btn-passplay').classList.add('hidden');
+    renderColorGrid();
+    showView('view-setup');
+    return;
+  }
+
+  await saveRoomState();
+
+  if (state.role === 'p1') {
+    showShareScreen();
+  } else {
+    triggerSimultaneousReveal();
+  }
+}
+
+function encodePayload() {
+  const payload = {
+    r: state.roomId,
+    b: state.blobId,
+    q: state.qIds,
+    p1: state.p1,
+    p2: state.p2.answers.length ? state.p2 : null
+  };
+  return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+}
+
+function decodePayload(str) {
+  try {
+    return JSON.parse(decodeURIComponent(escape(atob(str))));
+  } catch (e) { return null; }
+}
+
+async function saveRoomState() {
+  const roomData = {
+    roomId: state.roomId,
+    qIds: state.qIds,
+    p1: state.p1,
+    p2: state.p2.answers.length ? state.p2 : null,
+    updatedAt: Date.now()
+  };
+  try { localStorage.setItem('ve_room_' + state.roomId, JSON.stringify(roomData)); } catch(e) {}
+
+  try {
+    if (state.blobId) {
+      await fetchWithTimeout(BLOB_API + '/' + state.blobId, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(roomData)
+      }, 2500);
+    } else {
+      const res = await fetchWithTimeout(BLOB_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(roomData)
+      }, 2500);
+      if (res && res.ok) {
+        const loc = res.headers.get('Location') || res.headers.get('x-jsonblob') || '';
+        const id = loc.split('/').pop();
+        if (id) state.blobId = id;
+      }
+    }
+  } catch (e) {}
+
+  updateBrowserUrl(encodePayload());
+}
+
+function updateBrowserUrl(encoded) {
+  const base = window.location.href.split('?')[0].split('#')[0];
+  let url = base + '?room=' + encodeURIComponent(state.roomId) + '&lang=' + state.lang;
+  if (state.blobId) url += '&blob=' + encodeURIComponent(state.blobId);
+  url += '#d=' + encoded;
+  try { window.history.replaceState({}, '', url); } catch(e) {}
+  return url;
+}
+
+function getShareableUrl() {
+  return updateBrowserUrl(encodePayload());
+}
+
+function showShareScreen() {
+  getShareableUrl();
+  document.getElementById('share-room-code').textContent = state.roomId;
+  showView('view-share');
+  startPolling();
+}
+
+function startPolling() {
+  if (state.pollTimer) clearInterval(state.pollTimer);
+  state.pollTimer = setInterval(async () => {
+    try {
+      const local = JSON.parse(localStorage.getItem('ve_room_' + state.roomId) || 'null');
+      if (local && local.p2 && local.p2.answers && local.p2.answers.length === state.qIds.length) {
+        clearInterval(state.pollTimer);
+        state.p2 = local.p2;
+        triggerSimultaneousReveal();
+        return;
+      }
+    } catch(e) {}
+
+    if (state.blobId) {
+      const synced = await fetchCloudRoom(state.blobId);
+      if (synced && synced.p2 && synced.p2.answers && synced.p2.answers.length === state.qIds.length) {
+        clearInterval(state.pollTimer);
+        state.p2 = synced.p2;
+        updateBrowserUrl(encodePayload());
+        triggerSimultaneousReveal();
+      }
+    }
+  }, 2500);
+}
+
+async function checkSyncManual() {
+  const t = UI[state.lang] || UI.en;
+  if (state.blobId) {
+    const synced = await fetchCloudRoom(state.blobId);
+    if (synced && synced.p2 && synced.p2.answers && synced.p2.answers.length === state.qIds.length) {
+      clearInterval(state.pollTimer);
+      state.p2 = synced.p2;
+      updateBrowserUrl(encodePayload());
+      triggerSimultaneousReveal();
+      return;
+    }
+  }
+  alert(t.waitingToast);
+}
+
+async function fetchCloudRoom(blobId) {
+  try {
+    const res = await fetchWithTimeout(BLOB_API + '/' + blobId + '?_=' + Date.now(), {
+      headers: { 'Accept': 'application/json' }
+    }, 2500);
+    if (!res || !res.ok) return null;
+    return await res.json();
+  } catch (e) { return null; }
+}
+
+function triggerSimultaneousReveal() {
+  if (state.revealed) return;
+  state.revealed = true;
+  if (state.pollTimer) clearInterval(state.pollTimer);
+
+  showView('view-reveal');
+  let count = 3;
+  const numEl = document.getElementById('countdown-num');
+  numEl.textContent = count;
+
+  const timer = setInterval(() => {
+    count--;
+    if (count > 0) {
+      numEl.textContent = count;
+    } else {
+      clearInterval(timer);
+      renderResults();
+      showView('view-result');
+    }
+  }, 850);
+}
+
+function shareWhatsApp() {
+  const t = UI[state.lang] || UI.en;
+  const link = getShareableUrl();
+  window.open('https://wa.me/?text=' + encodeURIComponent(t.waText + link), '_blank');
+}
+
+function shareResultWhatsApp() {
+  const t = UI[state.lang] || UI.en;
+  const pct = calcMatchScore();
+  const link = getShareableUrl();
+  window.open('https://wa.me/?text=' + encodeURIComponent(t.waResText.replace('{pct}', pct) + link), '_blank');
+}
+
+function copyShareLink() {
+  const t = UI[state.lang] || UI.en;
+  const link = getShareableUrl();
+  if (navigator.clipboard) navigator.clipboard.writeText(link);
+  const btn = document.getElementById('btn-copy-link');
+  btn.textContent = t.copied;
+  setTimeout(() => btn.textContent = t.copyLink, 2000);
+}
+
+function calcMatchScore() {
+  let points = 0;
+  const total = state.qIds.length || 5;
+  for (let i = 0; i < total; i++) {
+    const a1 = state.p1.answers[i];
+    const a2 = state.p2.answers[i];
+    if (a1 === a2) points += 100;
+    else if (Math.abs(a1 - a2) === 1) points += 65;
+    else points += 35;
+  }
+  return Math.round(points / total);
+}
+
+function renderResults() {
+  const pct = calcMatchScore();
+  document.getElementById('res-pct').textContent = pct + '%';
+  document.getElementById('res-names').innerHTML =
+    '<strong style="color:' + state.p1.color + '">' + escapeHtml(state.p1.name) + '</strong> &amp; <strong style="color:' + state.p2.color + '">' + escapeHtml(state.p2.name) + '</strong>';
+
+  const tiers = REWARDS[state.lang] || REWARDS.en;
+  const unlocked = tiers.find(r => pct >= r.min) || tiers[tiers.length - 1];
+  document.getElementById('reward-tier').textContent = unlocked.tier;
+  document.getElementById('reward-title').textContent = unlocked.title;
+  document.getElementById('reward-desc').textContent = unlocked.desc;
+
+  const list = document.getElementById('comp-list');
+  list.innerHTML = '';
+  state.qIds.forEach((qid, idx) => {
+    const qObj = QUESTIONS.find(x => x.id === qid) || QUESTIONS[idx];
+    const opts = qObj.opts[state.lang] || qObj.opts.en;
+    const a1 = state.p1.answers[idx];
+    const a2 = state.p2.answers[idx];
+    const isMatch = a1 === a2;
+
+    const div = document.createElement('div');
+    div.className = 'comp-item' + (isMatch ? ' match' : '');
+    div.innerHTML =
+      '<div class="comp-q">' + escapeHtml(qObj.q[state.lang] || qObj.q.en) + '</div>' +
+      '<div class="comp-row">' +
+        '<div class="pill-ans" style="border-top:2px solid ' + state.p1.color + '">' +
+          '<small style="color:' + state.p1.color + ';font-weight:700;display:block">' + escapeHtml(state.p1.name) + '</small>' +
+          escapeHtml(opts[a1] || '') +
+        '</div>' +
+        '<div class="pill-ans" style="border-top:2px solid ' + state.p2.color + '">' +
+          '<small style="color:' + state.p2.color + ';font-weight:700;display:block">' + escapeHtml(state.p2.name) + '</small>' +
+          escapeHtml(opts[a2] || '') +
+        '</div>' +
+      '</div>';
+    list.appendChild(div);
+  });
+}
+
+function resetForNewRound() {
+  window.location.href = window.location.href.split('?')[0].split('#')[0];
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+(async function init() {
+  renderColorGrid();
+  const params = new URLSearchParams(window.location.search);
+  const urlLang = params.get('lang');
+  const roomId = params.get('room');
+  const blobId = params.get('blob');
+  const hashStr = window.location.hash.startsWith('#d=') ? window.location.hash.slice(3) : '';
+
+  if (urlLang && UI[urlLang]) setLang(urlLang);
+
+  let loaded = null;
+  if (hashStr) loaded = decodePayload(hashStr);
+  if (blobId || (loaded && loaded.b)) {
+    state.blobId = blobId || loaded.b;
+    const cloud = await fetchCloudRoom(state.blobId);
+    if (cloud) loaded = cloud;
+  }
+  if (!loaded && roomId) {
+    try { loaded = JSON.parse(localStorage.getItem('ve_room_' + roomId) || 'null'); } catch(e) {}
+  }
+
+  if (loaded && loaded.p1 && loaded.p1.answers && loaded.p1.answers.length) {
+    state.roomId = loaded.r || loaded.roomId || roomId;
+    state.qIds = loaded.q || loaded.qIds || pickFreshQuestions();
+    state.p1 = loaded.p1;
+
+    if (loaded.p2 && loaded.p2.answers && loaded.p2.answers.length === state.qIds.length) {
+      state.p2 = loaded.p2;
+      renderResults();
+      showView('view-result');
+      return;
+    }
+
+    state.role = 'p2';
+    state.selectedColor = (COLORS.find(c => c.hex !== state.p1.color) || COLORS[1]).hex;
+    document.getElementById('invite-banner').classList.remove('hidden');
+    document.getElementById('txt-invited-msg').textContent = (UI[state.lang]||UI.en).invitedMsg.replace('{name}', state.p1.name);
+    document.getElementById('btn-passplay').classList.add('hidden');
+    renderColorGrid();
+    showView('view-setup');
+  }
+})();
+</script>
+</body>
+</html>
