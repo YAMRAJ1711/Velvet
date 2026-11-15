@@ -1,0 +1,2707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Velvet &amp; Ember — 18+ Intimacy &amp; Desire Alignment</title>
+  <style>
+    /* =========================================================================
+       ZERO-DEPENDENCY INLINE DESIGN SYSTEM (NO EXTERNAL BLOCKING FONTS OR CDNS)
+       ========================================================================= */
+    :root {
+      --bg-base: #09050b;
+      --bg-card: rgba(21, 13, 25, 0.90);
+      --bg-input: rgba(10, 6, 13, 0.94);
+      --border-subtle: rgba(255, 255, 255, 0.11);
+      --text-main: #f8fafc;
+      --text-muted: rgba(248, 224, 232, 0.74);
+      --text-dim: rgba(248, 224, 232, 0.46);
+      --accent: #e11d48;
+      --accent-rgb: 225, 29, 72;
+      --p1-hex: #e11d48;
+      --p1-rgb: 225, 29, 72;
+      --p2-hex: #f59e0b;
+      --p2-rgb: 245, 158, 11;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-serif: Georgia, "Times New Roman", Times, serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-image:
+        radial-gradient(circle at 14% 14%, rgba(var(--p1-rgb), 0.22) 0%, transparent 46%),
+        radial-gradient(circle at 86% 84%, rgba(var(--p2-rgb), 0.18) 0%, transparent 48%),
+        radial-gradient(circle at 50% 45%, rgba(var(--accent-rgb), 0.11) 0%, transparent 65%);
+      transition: background-image 0.35s ease;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Header */
+    header {
+      padding: 20px 0 8px;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .brand-orb {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--accent), #701a75);
+      box-shadow: 0 4px 18px rgba(var(--accent-rgb), 0.45);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      background: linear-gradient(90deg, #ffffff, #ffe4e6, #fde68a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+    }
+
+    .pill-mature {
+      background: rgba(159, 18, 57, 0.35);
+      border-color: rgba(244, 63, 94, 0.42);
+      color: #fda4af;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .btn-ghost-sm {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid var(--border-subtle);
+      background: rgba(30, 18, 36, 0.88);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-ghost-sm:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.32);
+      background: rgba(48, 28, 58, 0.94);
+    }
+
+    /* Main Card */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 18px 0;
+    }
+
+    .glass-card {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid rgba(var(--accent-rgb), 0.32);
+      border-radius: 26px;
+      padding: 28px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.78), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      animation: fadeUp 0.28s ease forwards;
+    }
+
+    @media (max-width: 600px) {
+      .glass-card {
+        padding: 20px 18px;
+        border-radius: 22px;
+      }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      line-height: 1.18;
+      color: #ffffff;
+    }
+
+    .hero-title {
+      font-size: clamp(1.85rem, 4.5vw, 2.75rem);
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 22px;
+      max-width: 610px;
+    }
+
+    /* Form Controls */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 13px 15px;
+      border-radius: 15px;
+      background: var(--bg-input);
+      border: 1px solid rgba(var(--accent-rgb), 0.38);
+      color: #ffffff;
+      font-size: 0.98rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .text-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.22);
+    }
+
+    /* Colour Swatches */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 9px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .swatch-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .swatch-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 6px;
+      border-radius: 15px;
+      background: rgba(11, 7, 14, 0.90);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .swatch-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.32);
+    }
+
+    .swatch-btn.active {
+      border: 2px solid #ffffff;
+      color: #ffffff;
+      transform: scale(1.03);
+      box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.45);
+    }
+
+    .swatch-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      margin-bottom: 6px;
+      border: 2px solid rgba(255, 255, 255, 0.28);
+    }
+
+    .swatch-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    /* Deck Preview Box */
+    .deck-box {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(11, 7, 14, 0.76);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+
+    .deck-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .deck-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .deck-tag {
+      font-size: 0.72rem;
+      padding: 3px 9px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    /* Action Buttons */
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .btn-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 16px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent) 0%, #881337 100%);
+      color: #ffffff;
+      font-size: 0.96rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 10px 26px rgba(var(--accent-rgb), 0.42);
+      transition: transform 0.18s ease, filter 0.18s ease;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(34, 21, 41, 0.94);
+      color: #f8fafc;
+      font-size: 0.94rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.18s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(48, 30, 58, 0.98);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Collapsible Invite Code Drawer */
+    details.code-drawer {
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    details.code-drawer summary {
+      list-style: none;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 4px;
+      user-select: none;
+    }
+
+    details.code-drawer summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.code-drawer summary:hover {
+      color: #ffffff;
+    }
+
+    /* Quiz Options */
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      margin: 14px 0 22px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .option-list {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin: 20px 0 24px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 15px 16px;
+      border-radius: 16px;
+      background: rgba(11, 7, 14, 0.80);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .option-btn:hover {
+      border-color: rgba(var(--accent-rgb), 0.65);
+      background: rgba(38, 22, 46, 0.68);
+      transform: translateY(-1px);
+    }
+
+    .option-btn.selected {
+      border-color: var(--accent);
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.28), rgba(16, 10, 20, 0.92));
+      box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.25);
+    }
+
+    .option-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .option-btn.selected .option-badge {
+      background: var(--accent);
+    }
+
+    /* Results & Circular Score */
+    .score-ring-wrap {
+      position: relative;
+      width: 148px;
+      height: 148px;
+      margin: 16px auto;
+    }
+
+    .score-ring-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .comparison-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(11, 7, 14, 0.84);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 14px;
+    }
+
+    .partner-pair-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    @media (max-width: 600px) {
+      .partner-pair-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .partner-choice-box {
+      padding: 12px 14px;
+      border-radius: 13px;
+      background: rgba(24, 15, 29, 0.94);
+      border: 1px solid var(--border-subtle);
+    }
+
+    /* Share Box */
+    .copy-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 540px) {
+      .copy-row {
+        flex-direction: column;
+      }
+    }
+
+    .mono-input {
+      flex: 1;
+      padding: 11px 13px;
+      border-radius: 12px;
+      background: #08050a;
+      border: 1px solid var(--border-subtle);
+      color: #fbcfe8;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      outline: none;
+    }
+
+    /* Modals & Toast */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(5, 3, 7, 0.92);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-panel {
+      width: 100%;
+      max-width: 820px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #140c18;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.85);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .kpi-card {
+      padding: 13px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.76rem;
+    }
+
+    th, td {
+      padding: 9px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    th {
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    #toast-box {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 90;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 340px;
+      pointer-events: none;
+    }
+
+    .toast-item {
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: #1f1226;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      animation: fadeUp 0.25s ease forwards;
+    }
+
+    footer {
+      padding: 20px 0 26px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .link-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-size: 0.74rem;
+      cursor: pointer;
+    }
+
+    .link-btn:hover {
+      color: #fde68a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-box"></div>
+
+  <!-- Quick Hide / Privacy Lock Overlay -->
+  <div id="privacy-modal" class="modal-backdrop">
+    <div class="modal-panel" style="max-width: 440px; text-align: center;">
+      <div style="font-size: 2rem; margin-bottom: 10px;">🔒</div>
+      <h2 style="font-size: 1.65rem; margin-bottom: 8px;">Session Discreetly Locked</h2>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px;">
+        Your answers and partner comparison are hidden from view.
+      </p>
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <button type="button" class="btn-primary" style="width: auto; padding: 12px 22px;" onclick="closePrivacyModal()">Resume Session</button>
+        <button type="button" class="btn-secondary" style="width: auto; padding: 12px 18px;" onclick="wipeActiveSession()">Clear Session &amp; Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Raw Data Vault Modal -->
+  <div id="vault-modal" class="modal-backdrop">
+    <div class="modal-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 16px;">
+        <div>
+          <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #fbbf24;">Offline-First Telemetry &amp; Dataset</div>
+          <h2 style="font-size: 1.55rem;">Raw User Data Vault</h2>
+        </div>
+        <button type="button" class="btn-ghost-sm" onclick="closeVaultModal()">✕ Close</button>
+      </div>
+      <div id="vault-content"></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-inner">
+      <button type="button" class="brand-btn" onclick="resetToWelcome()">
+        <span class="brand-orb" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </span>
+        <span class="brand-title">Velvet &amp; Ember</span>
+      </button>
+
+      <div class="header-badges">
+        <span class="pill pill-mature">18+ Mature</span>
+        <span id="cloud-status-badge" class="pill">⚡ Connecting Cloud...</span>
+        <button type="button" class="btn-ghost-sm" onclick="openPrivacyModal()">Quick Hide</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Interactive Stage -->
+  <main>
+    <div class="container" id="app-stage">
+      <!-- Synchronously rendered on first paint -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div>For consenting adults (18+) • Live cloud rooms &amp; 40-question non-repeating 18+ deck.</div>
+      <div class="footer-links">
+        <button type="button" class="link-btn" onclick="openVaultModal()">Data Vault (CSV / JSON)</button>
+        <span>•</span>
+        <button type="button" class="link-btn" onclick="wipeActiveSession()">Clear Session Memory</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* =========================================================================
+       1. SIGNATURE COLOURS & SHORT PUNCHY 40-QUESTION 18+ BANK (8 × 5 CATS)
+       ========================================================================= */
+    const COLOURS = [
+      { id: 'crimson',  name: 'Crimson Rose',    hex: '#e11d48', rgb: '225, 29, 72' },
+      { id: 'plum',     name: 'Deep Plum',       hex: '#c026d3', rgb: '192, 38, 211' },
+      { id: 'violet',   name: 'Midnight Violet', hex: '#7c3aed', rgb: '124, 58, 237' },
+      { id: 'ember',    name: 'Ember Gold',      hex: '#f59e0b', rgb: '245, 158, 11' },
+      { id: 'sapphire', name: 'Sapphire Silk',   hex: '#0284c7', rgb: '2, 132, 199' },
+      { id: 'emerald',  name: 'Emerald Velvet',  hex: '#10b981', rgb: '16, 185, 129' }
+    ];
+
+    const QUESTION_BANK = [
+      /* CATEGORY 1: RAW TURN-ONS & AROUSAL (Q101 - Q108) */
+      {
+        id: 'Q101', cat: 1, category: 'Raw Turn-Ons',
+        question: 'What turns you on fastest?',
+        options: {
+          A: 'Rough kissing & neck bites',
+          B: 'Filthy whispers & all-day teasing',
+          C: 'Slow undressing & eye contact',
+          D: 'Spontaneous, no-warning hands'
+        },
+        spark: 'Spend 5 uninterrupted minutes on your partner’s top trigger first.'
+      },
+      {
+        id: 'Q102', cat: 1, category: 'Raw Turn-Ons',
+        question: 'Which bedroom detail drives you wildest?',
+        options: {
+          A: 'Loud moans & dirty talk',
+          B: 'Watching every move in dim light',
+          C: 'Firm grip on hips or hair',
+          D: 'Warm breath & skin-tight press'
+        },
+        spark: 'Turn up your partner’s favorite sensory cue tonight.'
+      },
+      {
+        id: 'Q103', cat: 1, category: 'Raw Turn-Ons',
+        question: 'Best pre-bedroom buildup while apart?',
+        options: {
+          A: 'Explicit texts or sneaky photos',
+          B: 'Secret touches in public',
+          C: 'Slow sensual oil massage',
+          D: 'Zero buildup—straight to bed'
+        },
+        spark: 'Start with this exact buildup before touching the mattress.'
+      },
+      {
+        id: 'Q104', cat: 1, category: 'Raw Turn-Ons',
+        question: 'Hottest spot outside the bedroom?',
+        options: {
+          A: 'Against the front door or kitchen',
+          B: 'Steamy hands-everywhere shower',
+          C: 'Parked car or dim balcony',
+          D: 'Strictly behind locked bedroom doors'
+        },
+        spark: 'Kick things off in an unexpected spot tonight.'
+      },
+      {
+        id: 'Q105', cat: 1, category: 'Raw Turn-Ons',
+        question: 'What makes a hookup unforgettable?',
+        options: {
+          A: 'Lingerie or dressing up to strip',
+          B: 'Raw, unfiltered lust & loud sounds',
+          C: 'Extended oral until someone begs',
+          D: 'Half-asleep midnight wake-up'
+        },
+        spark: 'Build tonight’s session around your chosen highlight.'
+      },
+      {
+        id: 'Q106', cat: 1, category: 'Raw Turn-Ons',
+        question: 'Favorite hotspot when kissed or teased?',
+        options: {
+          A: 'Neck, jawline & behind ears',
+          B: 'Inner thighs right to the edge',
+          C: 'Chest & collarbone with teeth',
+          D: 'Lower back, hips & spine'
+        },
+        spark: 'Focus 3 full minutes solely on your partner’s hotspot.'
+      },
+      {
+        id: 'Q107', cat: 1, category: 'Raw Turn-Ons',
+        question: 'How do you love getting undressed?',
+        options: {
+          A: 'Frantic—clothes ripped off fast',
+          B: 'Slow striptease piece by piece',
+          C: 'Partial clothes left on',
+          D: 'Stripped slowly by my partner'
+        },
+        spark: 'Use your partner’s favorite undressing style tonight.'
+      },
+      {
+        id: 'Q108', cat: 1, category: 'Raw Turn-Ons',
+        question: 'When is your raw lust highest?',
+        options: {
+          A: 'First thing in the morning',
+          B: 'Sneaky midday afternoon break',
+          C: 'Late night when inhibitions drop',
+          D: 'Anytime my partner gives that look'
+        },
+        spark: 'Schedule your next session in your peak window.'
+      },
+
+      /* CATEGORY 2: BEDROOM DYNAMIC & CONTROL (Q201 - Q208) */
+      {
+        id: 'Q201', cat: 2, category: 'Power & Control',
+        question: 'Favorite bedroom power dynamic?',
+        options: {
+          A: 'Taking control & setting the pace',
+          B: 'Surrendering & letting them lead',
+          C: 'Switching dominance back and forth',
+          D: 'Equal primal heat with zero rules'
+        },
+        spark: 'Pick who leads tonight—or switch roles halfway.'
+      },
+      {
+        id: 'Q202', cat: 2, category: 'Power & Control',
+        question: 'How do you feel about bedroom commands?',
+        options: {
+          A: 'Love giving explicit orders',
+          B: 'Love obeying every instruction',
+          C: 'Playful wrestling for top spot',
+          D: 'Soft guidance over strict roles'
+        },
+        spark: 'Give three bold commands tonight; fulfill every one.'
+      },
+      {
+        id: 'Q203', cat: 2, category: 'Power & Control',
+        question: 'How do you like things initiated?',
+        options: {
+          A: 'Bold pull straight into bed',
+          B: 'Being pursued & seduced first',
+          C: 'Heavy kissing that escalates fast',
+          D: 'Teasing until my partner begs'
+        },
+        spark: 'Initiate next time using your partner’s trigger.'
+      },
+      {
+        id: 'Q204', cat: 2, category: 'Power & Control',
+        question: 'What level of roughness excites you?',
+        options: {
+          A: 'Firm grip, spanking & hair pull',
+          B: 'Soft silk ties or pinned wrists',
+          C: 'Intense passion without marks',
+          D: 'Slow, deep, tender intimacy'
+        },
+        spark: 'Check boundaries, then play right at your shared edge.'
+      },
+      {
+        id: 'Q205', cat: 2, category: 'Power & Control',
+        question: 'How vocal do you want your partner?',
+        options: {
+          A: 'Unfiltered dirty talk & loud moans',
+          B: 'Breathless whispers & praise',
+          C: 'Heavy breathing & raw groans',
+          D: 'Intense eye contact over words'
+        },
+        spark: 'Drop all shyness and match your partner’s vocal vibe.'
+      },
+      {
+        id: 'Q206', cat: 2, category: 'Power & Control',
+        question: 'Favorite style of verbal play?',
+        options: {
+          A: 'Explicit descriptions of every move',
+          B: 'Praise—“you feel so good”',
+          C: 'Teasing—“tell me how bad you want it”',
+          D: 'Minimal words, pure body language'
+        },
+        spark: 'Whisper one unfiltered line at peak intensity tonight.'
+      },
+      {
+        id: 'Q207', cat: 2, category: 'Power & Control',
+        question: 'Thoughts on pinning wrists or restraint?',
+        options: {
+          A: 'Love pinning my partner’s hands',
+          B: 'Love having my wrists held down',
+          C: 'Tight full-body leg & arm wrap',
+          D: 'Prefer free hands to touch everywhere'
+        },
+        spark: 'Try wrist-pinning or a tight full-body hold tonight.'
+      },
+      {
+        id: 'Q208', cat: 2, category: 'Power & Control',
+        question: 'Who sets the rhythm at peak heat?',
+        options: {
+          A: 'I drive the pace hard and fast',
+          B: 'I ride on top to control depth',
+          C: 'I surrender to my partner’s thrust',
+          D: 'Syncing into one shared rhythm'
+        },
+        spark: 'Take turns owning the tempo for 5 minutes each.'
+      },
+
+      /* CATEGORY 3: INTENSITY, PACING & STAMINA (Q301 - Q308) */
+      {
+        id: 'Q301', cat: 3, category: 'Pacing & Intensity',
+        question: 'What sexual pacing do you crave most?',
+        options: {
+          A: 'Fast, hard & sweat-drenched',
+          B: 'Slow, deep & drawn-out burn',
+          C: 'Edging foreplay, explosive finish',
+          D: 'Quickies mixed with marathons'
+        },
+        spark: 'Match your partner’s tempo and delay climax tonight.'
+      },
+      {
+        id: 'Q302', cat: 3, category: 'Pacing & Intensity',
+        question: 'Ideal foreplay length before the main event?',
+        options: {
+          A: '30+ minutes of pure teasing',
+          B: '15 minutes of heavy warming up',
+          C: '5 minutes—straight into action',
+          D: 'Foreplay & sex blended all night'
+        },
+        spark: 'Commit to your partner’s ideal foreplay window tonight.'
+      },
+      {
+        id: 'Q303', cat: 3, category: 'Pacing & Intensity',
+        question: 'Dream weekly intimacy rhythm?',
+        options: {
+          A: 'Daily or multiple times a day',
+          B: '4 to 5 passionate nights a week',
+          C: '2 to 3 unhurried marathon nights',
+          D: '3 rounds in one night, then rest'
+        },
+        spark: 'Put phones away for one distraction-free night this week.'
+      },
+      {
+        id: 'Q304', cat: 3, category: 'Pacing & Intensity',
+        question: 'Favorite position energy right now?',
+        options: {
+          A: 'Face-to-face eye & breath lock',
+          B: 'From behind—deep angle & hip grip',
+          C: 'On top—full control over grind',
+          D: 'Switching 4+ positions in one round'
+        },
+        spark: 'Start in Partner 1’s angle and finish in Partner 2’s.'
+      },
+      {
+        id: 'Q305', cat: 3, category: 'Pacing & Intensity',
+        question: 'How do you feel about edging & control?',
+        options: {
+          A: 'Love teasing right to the brink',
+          B: 'Love climaxing only on command',
+          C: 'Building to finish together',
+          D: 'Once close, finish hard and fast'
+        },
+        spark: 'Try two deliberate pause-and-tease cycles before climax.'
+      },
+      {
+        id: 'Q306', cat: 3, category: 'Pacing & Intensity',
+        question: 'Ideal marathon night in bed?',
+        options: {
+          A: 'Multiple rounds over hours',
+          B: 'One uninterrupted 90-minute burn',
+          C: 'Wild, exhausting athletic session',
+          D: 'Pre-dinner quickie + midnight round'
+        },
+        spark: 'Clear tonight’s schedule for a two-round evening.'
+      },
+      {
+        id: 'Q307', cat: 3, category: 'Pacing & Intensity',
+        question: 'Role of oral pleasure in an ideal night?',
+        options: {
+          A: 'Essential—giving & receiving to climax',
+          B: 'Favorite way to build explosive heat',
+          C: 'Mutual touch & 69 together',
+          D: 'Great warmup before intercourse'
+        },
+        spark: 'Dedicate an unhurried oral session with zero rush.'
+      },
+      {
+        id: 'Q308', cat: 3, category: 'Pacing & Intensity',
+        question: 'Reaction to a sudden 10-minute quickie?',
+        options: {
+          A: 'Immediate yes—fast & thrilling',
+          B: 'Love it when we must stay quiet',
+          C: 'Fun tease if we finish later',
+          D: 'Prefer waiting for 30+ free minutes'
+        },
+        spark: 'Surprise your partner with an unscheduled quickie soon.'
+      },
+
+      /* CATEGORY 4: FANTASIES, KINKS & EXPLORATION (Q401 - Q408) */
+      {
+        id: 'Q401', cat: 4, category: 'Fantasies & Kinks',
+        question: 'How adventurous is your 18+ mood?',
+        options: {
+          A: 'Very bold—kinks, toys & roleplay',
+          B: 'Curious—down to try new fantasies',
+          C: 'Sensory—blindfolds, oils & ice',
+          D: 'Classic raw skin-on-skin heat'
+        },
+        spark: 'Trade one fantasy or sensory idea to try this week.'
+      },
+      {
+        id: 'Q402', cat: 4, category: 'Fantasies & Kinks',
+        question: 'Which bedroom addition excites you most?',
+        options: {
+          A: 'Blindfolds to heighten every touch',
+          B: 'Couples toys used together',
+          C: 'Roleplay—strangers at a hotel bar',
+          D: 'Private video just for us'
+        },
+        spark: 'Pick one shared curiosity and plan a night around it.'
+      },
+      {
+        id: 'Q403', cat: 4, category: 'Fantasies & Kinks',
+        question: 'Openness to confessing secret fantasies?',
+        options: {
+          A: 'Wide open in the heat of the moment',
+          B: 'Open when shared with zero judgment',
+          C: 'Prefer acting out subtle hints',
+          D: 'Keep fantasies private, live now'
+        },
+        spark: 'Swap one no-judgment fantasy confession tonight.'
+      },
+      {
+        id: 'Q404', cat: 4, category: 'Fantasies & Kinks',
+        question: 'Hottest roleplay scenario to act out?',
+        options: {
+          A: 'Strangers hooking up at a lounge',
+          B: 'Boss & eager subordinate',
+          C: 'Forbidden affair sneaking around',
+          D: 'No characters—just raw ourselves'
+        },
+        spark: 'Try a 5-minute intro scene before breaking character.'
+      },
+      {
+        id: 'Q405', cat: 4, category: 'Fantasies & Kinks',
+        question: 'Favorite bedroom lighting & visuals?',
+        options: {
+          A: 'Full-length mirror watching us',
+          B: 'Warm red glow or candlelight',
+          C: 'Bright enough to see every reaction',
+          D: 'Pitch dark—100% touch & sound'
+        },
+        spark: 'Set tonight’s room lighting to match your shared vibe.'
+      },
+      {
+        id: 'Q406', cat: 4, category: 'Fantasies & Kinks',
+        question: 'Most exciting sensory play right now?',
+        options: {
+          A: 'Warm oil drizzled on bare skin',
+          B: 'Ice cubes traced down inner thighs',
+          C: 'Blindfolded surprise kisses',
+          D: 'Silk sheets & pure friction'
+        },
+        spark: 'Bring warm oil, ice, or a blindfold to the nightstand.'
+      },
+      {
+        id: 'Q407', cat: 4, category: 'Fantasies & Kinks',
+        question: 'Thrill of “almost getting caught”?',
+        options: {
+          A: 'Huge turn-on—open curtains or balcony',
+          B: 'Fun in parked cars or stairwells',
+          C: 'Hot as dirty talk while safely home',
+          D: 'Prefer 100% locked-door privacy'
+        },
+        spark: 'Keep the adrenaline high within your comfort zone.'
+      },
+      {
+        id: 'Q408', cat: 4, category: 'Fantasies & Kinks',
+        question: 'Watching erotic clips or reading together?',
+        options: {
+          A: 'Love putting it on for inspiration',
+          B: 'Fun occasionally for new ideas',
+          C: 'Prefer filming our own private clips',
+          D: 'Zero screens—100% focus on us'
+        },
+        spark: 'Share one steamy scene or idea that always works.'
+      },
+
+      /* CATEGORY 5: PEAK, CLIMAX & AFTERGLOW (Q501 - Q508) */
+      {
+        id: 'Q501', cat: 5, category: 'Peak & Afterglow',
+        question: 'What do you crave right after climax?',
+        options: {
+          A: 'Tangled limbs & whispered pillow talk',
+          B: 'Round two—keeping the heat alive',
+          C: 'Playful laughing & slow kisses',
+          D: 'Deep calm & drifting off together'
+        },
+        spark: 'Honor your partner’s post-sex ritual with zero screens.'
+      },
+      {
+        id: 'Q502', cat: 5, category: 'Peak & Afterglow',
+        question: 'How does great sex fuel your bond?',
+        options: {
+          A: 'My #1 love language & closeness',
+          B: 'Trust fuels lust, lust deepens trust',
+          C: 'Exhilarating release that keeps us fun',
+          D: 'Aftercare matters as much as climax'
+        },
+        spark: 'Hold 3 minutes of skin-to-skin eye contact afterward.'
+      },
+      {
+        id: 'Q503', cat: 5, category: 'Peak & Afterglow',
+        question: 'Ideal post-session late-night routine?',
+        options: {
+          A: 'Warm shower washing each other',
+          B: 'Midnight snack naked in bed',
+          C: 'Recapping our favorite move tonight',
+          D: 'Falling asleep wrapped in arms'
+        },
+        spark: 'Make time for your chosen post-session ritual tonight.'
+      },
+      {
+        id: 'Q504', cat: 5, category: 'Peak & Afterglow',
+        question: 'Best way to guide what feels good?',
+        options: {
+          A: 'Whispers—“right there, don’t stop”',
+          B: 'Guiding hands & hips to the rhythm',
+          C: 'Talking openly in the afterglow',
+          D: 'Playful quizzes like this one'
+        },
+        spark: 'Give one explicit compliment about tonight’s chemistry.'
+      },
+      {
+        id: 'Q505', cat: 5, category: 'Peak & Afterglow',
+        question: 'What keeps raw lust alive long-term?',
+        options: {
+          A: 'Daily flirting, teasing & grabbing',
+          B: 'Trying new kinks & spots regularly',
+          C: 'Prioritizing intimacy on busy weeks',
+          D: 'Zero-judgment emotional safety'
+        },
+        spark: 'Start one daily physical touch habit tomorrow morning.'
+      },
+      {
+        id: 'Q506', cat: 5, category: 'Peak & Afterglow',
+        question: 'Finishing together vs. taking turns?',
+        options: {
+          A: 'Taking turns for 100% focus',
+          B: 'Synchronized climax at once',
+          C: 'Making my partner finish first',
+          D: 'No script—ride the wave'
+        },
+        spark: 'Focus completely on giving your partner an epic peak.'
+      },
+      {
+        id: 'Q507', cat: 5, category: 'Peak & Afterglow',
+        question: 'Aftercare that makes you feel most wanted?',
+        options: {
+          A: 'Soft kisses on shoulders & forehead',
+          B: 'Held tight under the covers',
+          C: 'Playful teasing about how wild it got',
+          D: 'Bringing water & caring for each other'
+        },
+        spark: 'Deliver your partner’s favorite aftercare right away.'
+      },
+      {
+        id: 'Q508', cat: 5, category: 'Peak & Afterglow',
+        question: 'Favorite move the morning after?',
+        options: {
+          A: 'Flirty text recapping last night',
+          B: 'Pulling back under covers for round 2',
+          C: 'Naked coffee & lazy morning kisses',
+          D: 'Knowing smile & lingering touch'
+        },
+        spark: 'Follow up tomorrow morning with your chosen move.'
+      }
+    ];
+
+    const SEEN_QUESTIONS_KEY = 've_seen_questions_v5';
+    const TELEMETRY_KEY = 've_raw_telemetry_v5';
+    const LOCAL_ROOMS_KEY = 've_cloud_rooms_mirror_v5';
+    const VAULT_PASSCODE = 'VELVET2026';
+
+    /* =========================================================================
+       2. NON-REPEATING 40-QUESTION DECK ENGINE & HELPERS
+       ========================================================================= */
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function fastRandomInt(max) {
+      try {
+        if (window.crypto && window.crypto.getRandomValues) {
+          const arr = new Uint32Array(1);
+          window.crypto.getRandomValues(arr);
+          return arr[0] % max;
+        }
+      } catch (e) {}
+      return Math.floor(Math.random() * max);
+    }
+
+    function shuffleArray(arr) {
+      const copy = arr.slice();
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = fastRandomInt(i + 1);
+        const tmp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = tmp;
+      }
+      return copy;
+    }
+
+    function makeRoomCode() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let out = 'VE';
+      for (let i = 0; i < 6; i++) out += chars[fastRandomInt(chars.length)];
+      return out;
+    }
+
+    function makeDeckNumber() {
+      return 1000 + fastRandomInt(9000);
+    }
+
+    function readSeenQuestionIds() {
+      try {
+        const raw = window.localStorage.getItem(SEEN_QUESTIONS_KEY);
+        if (raw) {
+          const arr = JSON.parse(raw);
+          if (Array.isArray(arr)) return arr;
+        }
+      } catch (e) {}
+      return [];
+    }
+
+    function markQuestionsAsSeen(qIds) {
+      try {
+        const existing = readSeenQuestionIds();
+        const combined = Array.from(new Set([...existing, ...qIds]));
+        const finalSet = combined.length >= QUESTION_BANK.length ? qIds.slice() : combined;
+        window.localStorage.setItem(SEEN_QUESTIONS_KEY, JSON.stringify(finalSet));
+      } catch (e) {}
+    }
+
+    function drawNonRepeatingDeck(excludeIds = []) {
+      const seenIds = readSeenQuestionIds();
+      const categoryOrder = shuffleArray([1, 2, 3, 4, 5]);
+      const drawn = [];
+
+      for (const cat of categoryOrder) {
+        const catPool = QUESTION_BANK.filter(q => q.cat === cat);
+        let candidates = catPool.filter(q => !seenIds.includes(q.id) && !excludeIds.includes(q.id));
+        if (candidates.length === 0) {
+          candidates = catPool.filter(q => !excludeIds.includes(q.id));
+        }
+        if (candidates.length === 0) {
+          candidates = catPool;
+        }
+        const chosen = candidates[fastRandomInt(candidates.length)];
+        drawn.push(chosen.id);
+      }
+
+      markQuestionsAsSeen(drawn);
+      return drawn;
+    }
+
+    function getQuestion(id) {
+      return QUESTION_BANK.find(q => q.id === id) || QUESTION_BANK[0];
+    }
+
+    function getColour(id) {
+      return COLOURS.find(c => c.id === id) || COLOURS[0];
+    }
+
+    function showToast(msg) {
+      const box = document.getElementById('toast-box');
+      if (!box) return;
+      const el = document.createElement('div');
+      el.className = 'toast-item';
+      el.textContent = msg;
+      box.appendChild(el);
+      setTimeout(() => {
+        if (el.parentNode) el.parentNode.removeChild(el);
+      }, 3200);
+    }
+
+    function copyToClipboard(text, successMsg) {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast(successMsg || 'Copied to clipboard!');
+      } catch (e) {
+        showToast('Select the link box and copy manually.');
+      }
+    }
+
+    function buildDirectRoomUrl(roomCode) {
+      try {
+        const url = new URL(window.location.href.split('#')[0]);
+        url.searchParams.set('room', roomCode);
+        return url.toString();
+      } catch (e) {
+        const base = window.location.href.split('?')[0].split('#')[0];
+        return `${base}?room=${encodeURIComponent(roomCode)}`;
+      }
+    }
+
+    function buildWhatsAppShareUrl(roomUrl, p1Name) {
+      const text = `🔥 ${p1Name} invited you to Velvet & Ember (18+ Desire & Lust Alignment)! Answer 5 quick questions & unlock our results together:\n${roomUrl}`;
+      return `https://wa.me/?text=${encodeURIComponent(text)}`;
+    }
+
+    /* =========================================================================
+       3. CLOUD SYNC ENGINE (FIREBASE FIRESTORE + ZERO-FREEZE OFFLINE FALLBACK)
+       ========================================================================= */
+    const cloudBridge = {
+      ready: false,
+      mode: 'offline', // 'cloud' | 'offline'
+      db: null,
+      auth: null,
+      user: null,
+      appId: 'default-app-id',
+      fns: null,
+      unsubRoom: null,
+      unsubTelemetry: null,
+      pollTimer: null
+    };
+
+    function updateCloudBadge() {
+      const badge = document.getElementById('cloud-status-badge');
+      if (!badge) return;
+      if (cloudBridge.mode === 'cloud') {
+        badge.textContent = '☁️ Live Cloud Sync';
+        badge.style.color = '#6ee7b7';
+        badge.style.borderColor = 'rgba(52, 211, 153, 0.35)';
+      } else {
+        badge.textContent = '⚡ Instant Local Sync';
+        badge.style.color = '#fde68a';
+        badge.style.borderColor = 'rgba(251, 191, 36, 0.35)';
+      }
+    }
+
+    function readLocalRooms() {
+      try {
+        const raw = window.localStorage.getItem(LOCAL_ROOMS_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveLocalRoom(roomCode, payload) {
+      try {
+        const all = readLocalRooms();
+        all[roomCode] = payload;
+        window.localStorage.setItem(LOCAL_ROOMS_KEY, JSON.stringify(all));
+      } catch (e) {}
+    }
+
+    async function cloudSaveRoom(roomCode, payload) {
+      saveLocalRoom(roomCode, payload);
+      if (cloudBridge.mode === 'cloud' && cloudBridge.db && cloudBridge.user && cloudBridge.fns) {
+        try {
+          const { doc, setDoc } = cloudBridge.fns;
+          const ref = doc(cloudBridge.db, 'artifacts', cloudBridge.appId, 'public', 'data', 'velvet_rooms', roomCode);
+          await setDoc(ref, payload, { merge: true });
+        } catch (e) {}
+      }
+    }
+
+    async function cloudFetchRoom(roomCode) {
+      if (cloudBridge.mode === 'cloud' && cloudBridge.db && cloudBridge.user && cloudBridge.fns) {
+        try {
+          const { doc, getDoc } = cloudBridge.fns;
+          const ref = doc(cloudBridge.db, 'artifacts', cloudBridge.appId, 'public', 'data', 'velvet_rooms', roomCode);
+          const snap = await getDoc(ref);
+          if (snap.exists()) {
+            const data = snap.data();
+            saveLocalRoom(roomCode, data);
+            return data;
+          }
+        } catch (e) {}
+      }
+      const localAll = readLocalRooms();
+      return localAll[roomCode] || null;
+    }
+
+    function stopRoomSubscription() {
+      if (typeof cloudBridge.unsubRoom === 'function') {
+        try { cloudBridge.unsubRoom(); } catch (e) {}
+        cloudBridge.unsubRoom = null;
+      }
+      if (cloudBridge.pollTimer) {
+        clearInterval(cloudBridge.pollTimer);
+        cloudBridge.pollTimer = null;
+      }
+    }
+
+    function subscribeToRoom(roomCode, onUpdate) {
+      stopRoomSubscription();
+
+      if (cloudBridge.mode === 'cloud' && cloudBridge.db && cloudBridge.user && cloudBridge.fns) {
+        try {
+          const { doc, onSnapshot } = cloudBridge.fns;
+          const ref = doc(cloudBridge.db, 'artifacts', cloudBridge.appId, 'public', 'data', 'velvet_rooms', roomCode);
+          cloudBridge.unsubRoom = onSnapshot(
+            ref,
+            (snap) => {
+              if (snap.exists()) {
+                const data = snap.data();
+                saveLocalRoom(roomCode, data);
+                onUpdate(data);
+              }
+            },
+            () => {}
+          );
+        } catch (e) {}
+      }
+
+      // Cross-tab & offline mirror watcher
+      cloudBridge.pollTimer = setInterval(() => {
+        const localAll = readLocalRooms();
+        if (localAll[roomCode]) {
+          onUpdate(localAll[roomCode]);
+        }
+      }, 1500);
+    }
+
+    /* =========================================================================
+       4. RAW TELEMETRY STORE (CLOUD + LOCAL STORAGE MIRROR)
+       ========================================================================= */
+    let memoryTelemetry = [];
+
+    function readTelemetryRows() {
+      try {
+        const raw = window.localStorage.getItem(TELEMETRY_KEY);
+        if (raw) {
+          const arr = JSON.parse(raw);
+          if (Array.isArray(arr)) {
+            memoryTelemetry = arr;
+            return arr;
+          }
+        }
+      } catch (e) {}
+      return memoryTelemetry;
+    }
+
+    async function recordRawTelemetry(row) {
+      const entry = {
+        ...row,
+        createdAtIso: new Date().toISOString()
+      };
+      const docKey = `${entry.roomCode}_${entry.stage}`;
+      const existing = readTelemetryRows();
+      const updated = [entry, ...existing.filter(r => `${r.roomCode}_${r.stage}` !== docKey)].slice(0, 500);
+      memoryTelemetry = updated;
+      try {
+        window.localStorage.setItem(TELEMETRY_KEY, JSON.stringify(updated));
+      } catch (e) {}
+
+      if (cloudBridge.mode === 'cloud' && cloudBridge.db && cloudBridge.user && cloudBridge.fns) {
+        try {
+          const { doc, setDoc } = cloudBridge.fns;
+          const ref = doc(cloudBridge.db, 'artifacts', cloudBridge.appId, 'public', 'data', 'velvet_telemetry', docKey);
+          await setDoc(ref, entry, { merge: true });
+        } catch (e) {}
+      }
+    }
+
+    function syncVaultFromCloud() {
+      if (cloudBridge.mode !== 'cloud' || !cloudBridge.db || !cloudBridge.user || !cloudBridge.fns) return;
+      if (typeof cloudBridge.unsubTelemetry === 'function') return;
+      try {
+        const { collection, onSnapshot } = cloudBridge.fns;
+        const colRef = collection(cloudBridge.db, 'artifacts', cloudBridge.appId, 'public', 'data', 'velvet_telemetry');
+        cloudBridge.unsubTelemetry = onSnapshot(
+          colRef,
+          (snap) => {
+            const cloudRows = [];
+            snap.forEach(d => cloudRows.push(d.data()));
+            cloudRows.sort((a, b) => (Number(b.timestamp) || 0) - (Number(a.timestamp) || 0));
+            if (cloudRows.length > 0) {
+              memoryTelemetry = cloudRows;
+              try {
+                window.localStorage.setItem(TELEMETRY_KEY, JSON.stringify(cloudRows.slice(0, 500)));
+              } catch (e) {}
+              if (state.vaultUnlocked) renderVault();
+            }
+          },
+          () => {}
+        );
+      } catch (e) {}
+    }
+
+    /* =========================================================================
+       5. APPLICATION STATE
+       ========================================================================= */
+    const state = {
+      roomCode: makeRoomCode(),
+      deckNumber: makeDeckNumber(),
+      startedAt: Date.now(),
+      view: 'welcome', // 'welcome' | 'loading_room' | 'p2_unlock' | 'quiz' | 'share_invite' | 'handoff' | 'results'
+      mode: 'link',    // 'link' | 'same_device'
+      activePartner: 1,
+      qIndex: 0,
+      deckIds: drawNonRepeatingDeck(),
+      p1Name: '',
+      p1Colour: 'crimson',
+      p1Answers: {},
+      p2Name: '',
+      p2Colour: 'ember',
+      p2Answers: {},
+      shareLink: '',
+      vaultUnlocked: false
+    };
+
+    function syncThemeVariables() {
+      const root = document.documentElement;
+      const c1 = getColour(state.p1Colour);
+      const c2 = getColour(state.p2Colour);
+      const active = state.activePartner === 2 ? c2 : c1;
+      root.style.setProperty('--p1-hex', c1.hex);
+      root.style.setProperty('--p1-rgb', c1.rgb);
+      root.style.setProperty('--p2-hex', c2.hex);
+      root.style.setProperty('--p2-rgb', c2.rgb);
+      root.style.setProperty('--accent', active.hex);
+      root.style.setProperty('--accent-rgb', active.rgb);
+    }
+
+    /* =========================================================================
+       6. COMPATIBILITY & LUST ALIGNMENT SCORING ENGINE
+       ========================================================================= */
+    function computeAlignment() {
+      let exactCount = 0;
+      let compCount = 0;
+
+      const items = state.deckIds.map(qid => {
+        const q = getQuestion(qid);
+        const a1 = state.p1Answers[qid];
+        const a2 = state.p2Answers[qid];
+        const isExact = a1 === a2;
+        let isComplementary = false;
+        let compLabel = '';
+
+        if (!isExact) {
+          if (q.cat === 2 && ((a1 === 'A' && a2 === 'B') || (a1 === 'B' && a2 === 'A'))) {
+            isComplementary = true;
+            compLabel = 'Dom / Sub Fit';
+          } else if (q.cat === 1 && ((a1 === 'A' && a2 === 'B') || (a1 === 'B' && a2 === 'A'))) {
+            isComplementary = true;
+            compLabel = 'High-Tension Spark';
+          } else if (q.cat === 3 && ((a1 === 'A' && a2 === 'C') || (a1 === 'C' && a2 === 'A') || (a1 === 'B' && a2 === 'C') || (a1 === 'C' && a2 === 'B'))) {
+            isComplementary = true;
+            compLabel = 'Balanced Tempo';
+          } else if (q.cat === 4 && ((a1 === 'A' && a2 === 'B') || (a1 === 'B' && a2 === 'A') || (a1 === 'B' && a2 === 'C') || (a1 === 'C' && a2 === 'B'))) {
+            isComplementary = true;
+            compLabel = 'Shared Curiosity';
+          }
+        }
+
+        if (isExact) exactCount++;
+        else if (isComplementary) compCount++;
+
+        return { ...q, a1, a2, isExact, isComplementary, compLabel };
+      });
+
+      const pct = Math.min(100, Math.max(24, (exactCount * 20) + (compCount * 12) + ((5 - exactCount - compCount) * 4)));
+
+      let badge = 'Opposites Ignite';
+      let title = 'Contrasting Desires, Wild Potential';
+      let summary = `You and your partner experience lust and pacing differently—giving you a blueprint to surprise each other tonight.`;
+
+      if (exactCount >= 4 || pct >= 88) {
+        badge = 'Scorching Synchronization';
+        title = 'Undeniable Sexual Chemistry';
+        summary = `${escapeHtml(state.p1Name)} and ${escapeHtml(state.p2Name)} are on the exact same wavelength—from arousal triggers to afterglow cravings.`;
+      } else if (exactCount >= 2 || compCount >= 2 || pct >= 64) {
+        badge = 'Magnetic Polarity';
+        title = 'Passionate & Complementary';
+        summary = `You share core turn-ons alongside thrilling push-pull contrasts where one leads and the other leans in.`;
+      }
+
+      return { exactCount, compCount, pct, items, badge, title, summary };
+    }
+
+    /* =========================================================================
+       7. VIEW RENDERERS
+       ========================================================================= */
+    function render() {
+      syncThemeVariables();
+      const stage = document.getElementById('app-stage');
+      if (!stage) return;
+
+      switch (state.view) {
+        case 'welcome':      stage.innerHTML = viewWelcome(); break;
+        case 'loading_room': stage.innerHTML = viewLoadingRoom(); break;
+        case 'p2_unlock':    stage.innerHTML = viewP2Unlock(); break;
+        case 'quiz':         stage.innerHTML = viewQuiz(); break;
+        case 'share_invite': stage.innerHTML = viewShareInvite(); break;
+        case 'handoff':      stage.innerHTML = viewHandoff(); break;
+        case 'results':      stage.innerHTML = viewResults(); break;
+        default:             stage.innerHTML = viewWelcome();
+      }
+    }
+
+    function renderSwatchPicker(selectedId, partnerNum) {
+      const activeObj = getColour(selectedId);
+      return `
+        <div>
+          <div class="field-label">
+            <span>Signature Colour</span>
+            <span style="color: ${activeObj.hex}; text-transform: none; font-size: 0.78rem;">${escapeHtml(activeObj.name)}</span>
+          </div>
+          <div class="swatch-grid">
+            ${COLOURS.map(c => `
+              <button
+                type="button"
+                class="swatch-btn ${c.id === selectedId ? 'active' : ''}"
+                onclick="pickColour(${partnerNum}, '${c.id}')"
+              >
+                <span class="swatch-dot" style="background-color: ${c.hex}; box-shadow: 0 0 12px ${c.hex}88;"></span>
+                <span class="swatch-name">${escapeHtml(c.name.split(' ')[0])}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function viewWelcome() {
+      const c1 = getColour(state.p1Colour);
+      const deckTags = state.deckIds.map((id, idx) => {
+        const q = getQuestion(id);
+        return `<span class="deck-tag"><strong>#${idx + 1}</strong> ${escapeHtml(q.category)}</span>`;
+      }).join('');
+
+      return `
+        <div class="glass-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
+            <span class="pill" style="border-color: ${c1.hex}66; color: ${c1.hex}; background: ${c1.hex}18;">
+              Deck #${state.deckNumber} • 5 Fresh Questions
+            </span>
+            <button type="button" class="btn-ghost-sm" onclick="shuffleDeck()">
+              ↻ New Question Set
+            </button>
+          </div>
+
+          <h1 class="hero-title">
+            Compare your <span style="font-style: italic; color: ${c1.hex};">lust, kinks</span> &amp; chemistry.
+          </h1>
+          <p class="subtitle">
+            Pick your name &amp; colour, answer 5 quick 18+ questions, and share one live link on WhatsApp—both of you see the results automatically!
+          </p>
+
+          <div style="margin-bottom: 18px;">
+            <label class="field-label" for="p1-name">Your Name (Partner 1)</label>
+            <input
+              id="p1-name"
+              type="text"
+              maxlength="28"
+              class="text-input"
+              value="${escapeHtml(state.p1Name)}"
+              oninput="state.p1Name = this.value"
+              placeholder="Enter your name or nickname..."
+            />
+          </div>
+
+          ${renderSwatchPicker(state.p1Colour, 1)}
+
+          <div class="deck-box">
+            <div class="deck-header">
+              <span style="font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">
+                Your Non-Repeating 5-Question Draw
+              </span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">
+                40-Question Vault
+              </span>
+            </div>
+            <div class="deck-tags">${deckTags}</div>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn-primary" onclick="beginQuiz('link')">
+              💬 Start &amp; Share Link
+            </button>
+            <button type="button" class="btn-secondary" onclick="beginQuiz('same_device')">
+              💞 Pass &amp; Play Together
+            </button>
+          </div>
+
+          <details class="code-drawer">
+            <summary>
+              <span>🔑 Have a room code or link from your partner?</span>
+              <span style="font-size: 0.72rem; color: var(--text-dim);">Join room ▾</span>
+            </summary>
+            <div class="copy-row" style="margin-top: 10px;">
+              <input
+                id="manual-code-input"
+                type="text"
+                class="mono-input"
+                placeholder="Paste room link (?room=VE...) or Room Code here"
+              />
+              <button type="button" class="btn-secondary" style="width: auto; padding: 11px 18px; font-size: 0.84rem;" onclick="joinManualRoom()">
+                Open Room
+              </button>
+            </div>
+          </details>
+        </div>
+      `;
+    }
+
+    function viewLoadingRoom() {
+      return `
+        <div class="glass-card" style="max-width: 460px; margin: 0 auto; text-align: center; padding: 36px 24px;">
+          <div style="font-size: 2rem; margin-bottom: 10px;">✨</div>
+          <h2 style="font-size: 1.65rem; margin-bottom: 8px;">Opening Live Room ${escapeHtml(state.roomCode)}...</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Syncing your partner’s answers and 5-question deck.
+          </p>
+        </div>
+      `;
+    }
+
+    function viewP2Unlock() {
+      const c1 = getColour(state.p1Colour);
+      return `
+        <div class="glass-card" style="max-width: 560px; margin: 0 auto;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <span class="pill" style="border-color: ${c1.hex}88; background: ${c1.hex}22; color: #ffffff; margin-bottom: 12px;">
+              <span style="width: 9px; height: 9px; border-radius: 50%; background: ${c1.hex}; display: inline-block;"></span>
+              ${escapeHtml(state.p1Name)} (${escapeHtml(c1.name)}) is waiting • Room ${escapeHtml(state.roomCode)}
+            </span>
+            <h2 style="font-size: 2rem; margin-bottom: 8px;">Your turn to match desires</h2>
+            <p style="color: var(--text-muted); font-size: 0.92rem;">
+              <strong>${escapeHtml(state.p1Name)}</strong>’s answers stay hidden until you finish the exact same 5 quick questions. Once you submit, <strong>both of you</strong> unlock the results automatically!
+            </p>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <label class="field-label" for="p2-name">Your Name (Partner 2)</label>
+            <input
+              id="p2-name"
+              type="text"
+              maxlength="28"
+              class="text-input"
+              value="${escapeHtml(state.p2Name)}"
+              oninput="state.p2Name = this.value"
+              placeholder="Enter your name or nickname..."
+            />
+          </div>
+
+          ${renderSwatchPicker(state.p2Colour, 2)}
+
+          <button type="button" class="btn-primary" onclick="startPartner2Quiz()">
+            Answer 5 Questions &amp; Unlock Both →
+          </button>
+        </div>
+      `;
+    }
+
+    function viewQuiz() {
+      const qid = state.deckIds[state.qIndex];
+      const q = getQuestion(qid);
+      const isP1 = state.activePartner === 1;
+      const whoName = isP1 ? state.p1Name : state.p2Name;
+      const activeCol = getColour(isP1 ? state.p1Colour : state.p2Colour);
+      const ansMap = isP1 ? state.p1Answers : state.p2Answers;
+      const picked = ansMap[qid];
+      const pct = ((state.qIndex + 1) / 5) * 100;
+
+      const optionsHtml = ['A', 'B', 'C', 'D'].map(letter => `
+        <button
+          type="button"
+          class="option-btn ${picked === letter ? 'selected' : ''}"
+          onclick="chooseOption('${letter}')"
+        >
+          <span class="option-badge">${letter}</span>
+          <span style="font-size: 0.98rem; font-weight: 500; padding-top: 2px;">${escapeHtml(q.options[letter])}</span>
+        </button>
+      `).join('');
+
+      return `
+        <div class="glass-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <span class="pill" style="border-color: ${activeCol.hex}88; background: ${activeCol.hex}22; color: #ffffff;">
+              <span style="width: 9px; height: 9px; border-radius: 50%; background: ${activeCol.hex}; display: inline-block;"></span>
+              ${escapeHtml(whoName)} • ${escapeHtml(activeCol.name)}
+            </span>
+            <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim);">
+              ${q.id} • ${state.qIndex + 1} / 5
+            </span>
+          </div>
+
+          <div class="progress-track">
+            <div class="progress-fill" style="width: ${pct}%;"></div>
+          </div>
+
+          <div style="font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: ${activeCol.hex}; margin-bottom: 6px;">
+            0${state.qIndex + 1}. ${escapeHtml(q.category)}
+          </div>
+          <h2 style="font-size: clamp(1.5rem, 3.8vw, 2.05rem); margin-bottom: 6px;">
+            ${escapeHtml(q.question)}
+          </h2>
+
+          <div class="option-list">${optionsHtml}</div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
+            <button type="button" class="btn-ghost-sm" onclick="goBackQuestion()">← Back</button>
+            <button
+              type="button"
+              class="btn-primary"
+              style="width: auto; padding: 13px 24px;"
+              ${!picked ? 'disabled' : ''}
+              onclick="goForwardQuestion()"
+            >
+              ${state.qIndex === 4 ? (isP1 ? 'Create Live Link →' : 'Reveal Our Results →') : 'Next →'}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function viewShareInvite() {
+      const c1 = getColour(state.p1Colour);
+      const waUrl = buildWhatsAppShareUrl(state.shareLink, state.p1Name);
+
+      return `
+        <div class="glass-card">
+          <div style="text-align: center; max-width: 540px; margin: 0 auto 20px;">
+            <span class="pill" style="border-color: ${c1.hex}88; background: ${c1.hex}22; color: #ffffff; margin-bottom: 12px;">
+              ● Live Waiting Room • Code: ${escapeHtml(state.roomCode)}
+            </span>
+            <h2 style="font-size: 2rem; margin-bottom: 8px;">Send this link to your partner!</h2>
+            <p style="color: var(--text-muted); font-size: 0.92rem;">
+              When your partner opens this exact link and finishes their 5 questions, <strong>both of your screens</strong> will automatically unlock the comparison!
+            </p>
+          </div>
+
+          <div class="btn-row" style="margin-bottom: 18px;">
+            <a
+              href="${escapeHtml(waUrl)}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary"
+              style="text-decoration: none; background: linear-gradient(135deg, #16a34a, #15803d); box-shadow: 0 10px 26px rgba(22, 163, 74, 0.38);"
+            >
+              📲 Share on WhatsApp
+            </a>
+            <button
+              type="button"
+              class="btn-secondary"
+              onclick="copyToClipboard(state.shareLink, 'Direct link copied!')"
+            >
+              🔗 Copy Direct Link
+            </button>
+          </div>
+
+          <div class="deck-box">
+            <div class="field-label" style="color: ${c1.hex};">
+              <span>Shared Room Link (Same link shows results for both)</span>
+              <span style="font-family: var(--font-mono);">Room ${escapeHtml(state.roomCode)}</span>
+            </div>
+            <div class="copy-row">
+              <input type="text" readonly class="mono-input" value="${escapeHtml(state.shareLink)}" onclick="this.select()" />
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+            <span style="font-size: 0.82rem; color: var(--text-dim);">⏳ Waiting for Partner 2 to submit...</span>
+            <button type="button" class="btn-ghost-sm" onclick="openPartner2Directly()">
+              Answer on This Device Instead →
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function viewHandoff() {
+      const c1 = getColour(state.p1Colour);
+      return `
+        <div class="glass-card" style="max-width: 540px; margin: 0 auto;">
+          <div style="text-align: center; margin-bottom: 18px;">
+            <span class="pill" style="border-color: ${c1.hex}88; color: ${c1.hex}; margin-bottom: 10px;">
+              ${escapeHtml(state.p1Name)}’s answers are hidden
+            </span>
+            <h2 style="font-size: 1.95rem; margin-bottom: 6px;">Pass the device to Partner 2</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              Enter Partner 2’s name and colour to answer the same 5 questions.
+            </p>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <label class="field-label" for="handoff-p2">Partner 2’s Name</label>
+            <input
+              id="handoff-p2"
+              type="text"
+              maxlength="28"
+              class="text-input"
+              value="${escapeHtml(state.p2Name)}"
+              oninput="state.p2Name = this.value"
+              placeholder="Enter Partner 2's name..."
+            />
+          </div>
+
+          ${renderSwatchPicker(state.p2Colour, 2)}
+
+          <button type="button" class="btn-primary" onclick="startPartner2Handoff()">
+            Start Partner 2’s 5 Questions →
+          </button>
+        </div>
+      `;
+    }
+
+    function viewResults() {
+      const res = computeAlignment();
+      const c1 = getColour(state.p1Colour);
+      const c2 = getColour(state.p2Colour);
+      const roomUrl = state.shareLink || buildDirectRoomUrl(state.roomCode);
+      const waResultUrl = `https://wa.me/?text=${encodeURIComponent(`🔥 We scored ${res.pct}% Lust & Intimacy Alignment on Velvet & Ember! View our full comparison here:\n${roomUrl}`)}`;
+
+      const radius = 62;
+      const circumference = 2 * Math.PI * radius;
+      const dashOffset = circumference - (res.pct / 100) * circumference;
+
+      const cardsHtml = res.items.map((item, idx) => {
+        const badgeHtml = item.isExact
+          ? `<span class="pill" style="background: rgba(16,185,129,0.16); border-color: rgba(52,211,153,0.4); color: #6ee7b7;">✓ Exact Match</span>`
+          : item.isComplementary
+            ? `<span class="pill" style="background: rgba(245,158,11,0.16); border-color: rgba(251,191,36,0.45); color: #fde68a;">🔥 ${escapeHtml(item.compLabel)}</span>`
+            : `<span class="pill">Different Vibes</span>`;
+
+        return `
+          <div class="comparison-card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap;">
+              <div>
+                <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim);">
+                  0${idx + 1}. ${escapeHtml(item.category)}
+                </div>
+                <h3 style="font-size: 1.22rem; margin-top: 2px;">${escapeHtml(item.question)}</h3>
+              </div>
+              ${badgeHtml}
+            </div>
+
+            <div class="partner-pair-grid">
+              <div class="partner-choice-box" style="border-color: ${c1.hex}66;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.76rem; font-weight: 700; margin-bottom: 4px;">
+                  <span style="color: ${c1.hex};">● ${escapeHtml(state.p1Name)}</span>
+                  <span>${item.a1}</span>
+                </div>
+                <div style="font-size: 0.92rem; font-weight: 500; color: #f8fafc;">${escapeHtml(item.options[item.a1])}</div>
+              </div>
+
+              <div class="partner-choice-box" style="border-color: ${c2.hex}66;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.76rem; font-weight: 700; margin-bottom: 4px;">
+                  <span style="color: ${c2.hex};">● ${escapeHtml(state.p2Name)}</span>
+                  <span>${item.a2}</span>
+                </div>
+                <div style="font-size: 0.92rem; font-weight: 500; color: #f8fafc;">${escapeHtml(item.options[item.a2])}</div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.84rem; font-style: italic; color: var(--text-muted); padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.07);">
+              💋 ${escapeHtml(item.spark)}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div class="glass-card" style="text-align: center;">
+            <span class="pill" style="background: linear-gradient(90deg, ${c1.hex}33, ${c2.hex}33); border-color: rgba(255,255,255,0.22); color: #ffffff; margin-bottom: 12px;">
+              ${escapeHtml(res.badge)} • Room ${escapeHtml(state.roomCode)}
+            </span>
+            <h1 class="hero-title" style="margin-bottom: 8px;">${escapeHtml(res.title)}</h1>
+
+            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+              <span class="pill" style="border-color: ${c1.hex}; color: #ffffff;">
+                <span style="width: 9px; height: 9px; border-radius: 50%; background: ${c1.hex};"></span>
+                ${escapeHtml(state.p1Name)}
+              </span>
+              <span style="color: var(--text-dim); align-self: center;">&amp;</span>
+              <span class="pill" style="border-color: ${c2.hex}; color: #ffffff;">
+                <span style="width: 9px; height: 9px; border-radius: 50%; background: ${c2.hex};"></span>
+                ${escapeHtml(state.p2Name)}
+              </span>
+            </div>
+
+            <div class="score-ring-wrap">
+              <svg width="148" height="148" viewBox="0 0 148 148">
+                <defs>
+                  <linearGradient id="velvetGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="${c1.hex}" />
+                    <stop offset="100%" stop-color="${c2.hex}" />
+                  </linearGradient>
+                </defs>
+                <circle cx="74" cy="74" r="${radius}" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="11" />
+                <circle
+                  cx="74" cy="74" r="${radius}"
+                  fill="none"
+                  stroke="url(#velvetGrad)"
+                  stroke-width="11"
+                  stroke-linecap="round"
+                  stroke-dasharray="${circumference}"
+                  stroke-dashoffset="${dashOffset}"
+                  transform="rotate(-90 74 74)"
+                />
+              </svg>
+              <div class="score-ring-center">
+                <div style="font-family: var(--font-serif); font-size: 2.15rem; font-weight: 700; line-height: 1;">${res.pct}%</div>
+                <div style="font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-top: 3px;">Alignment</div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 12px;">
+              <strong>${res.exactCount}/5</strong> Exact Matches • <strong>${res.compCount}</strong> Complementary Spark${res.compCount === 1 ? '' : 's'}
+            </div>
+
+            <p style="color: var(--text-muted); font-size: 0.94rem; max-width: 580px; margin: 0 auto 20px;">
+              ${res.summary}
+            </p>
+
+            <div class="deck-box" style="text-align: left; max-width: 600px; margin: 0 auto 18px;">
+              <div class="field-label" style="color: #fde68a;">
+                <span>Live Results Link (Accessible Anytime by Both of You)</span>
+              </div>
+              <div class="btn-row" style="margin-top: 8px;">
+                <a
+                  href="${escapeHtml(waResultUrl)}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-primary"
+                  style="text-decoration: none; background: linear-gradient(135deg, #16a34a, #15803d); padding: 13px 16px; font-size: 0.88rem;"
+                >
+                  📲 Send Results on WhatsApp
+                </a>
+                <button
+                  type="button"
+                  class="btn-secondary"
+                  style="padding: 13px 16px; font-size: 0.88rem;"
+                  onclick="copyToClipboard('${escapeHtml(roomUrl)}', 'Results link copied! Both partners can open it directly.')"
+                >
+                  🔗 Copy Results Link
+                </button>
+              </div>
+            </div>
+
+            <button type="button" class="btn-ghost-sm" style="padding: 10px 20px;" onclick="resetToWelcome()">
+              ↻ Play Again with 5 New Questions
+            </button>
+          </div>
+
+          <div class="glass-card">
+            <h2 style="font-size: 1.65rem; margin-bottom: 14px;">Side-by-Side Desire Breakdown</h2>
+            ${cardsHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    /* =========================================================================
+       8. DATA VAULT MODAL
+       ========================================================================= */
+    function openVaultModal() {
+      const m = document.getElementById('vault-modal');
+      if (m) m.classList.add('open');
+      syncVaultFromCloud();
+      renderVault();
+    }
+
+    function closeVaultModal() {
+      const m = document.getElementById('vault-modal');
+      if (m) m.classList.remove('open');
+    }
+
+    function unlockVault(bypassDemo) {
+      if (bypassDemo) {
+        state.vaultUnlocked = true;
+        renderVault();
+        return;
+      }
+      const inp = document.getElementById('vault-pass-input');
+      if (inp && inp.value.trim().toUpperCase() === VAULT_PASSCODE) {
+        state.vaultUnlocked = true;
+        renderVault();
+      } else {
+        showToast('Incorrect passcode. Use VELVET2026 or click Preview Live Telemetry.');
+      }
+    }
+
+    function renderVault() {
+      const box = document.getElementById('vault-content');
+      if (!box) return;
+
+      if (!state.vaultUnlocked) {
+        box.innerHTML = `
+          <div style="max-width: 420px; margin: 16px auto; text-align: center;">
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 14px;">
+              Inspect anonymized cloud &amp; local telemetry rows and export CSV/JSON datasets.
+            </p>
+            <input
+              id="vault-pass-input"
+              type="password"
+              class="text-input"
+              style="text-align: center; font-family: var(--font-mono); margin-bottom: 12px;"
+              placeholder="Passcode (VELVET2026)"
+              onkeydown="if(event.key==='Enter') unlockVault(false)"
+            />
+            <div class="btn-row">
+              <button type="button" class="btn-primary" onclick="unlockVault(false)">Unlock Vault</button>
+              <button type="button" class="btn-secondary" onclick="unlockVault(true)">Preview Live Telemetry</button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const rows = readTelemetryRows();
+      const completed = rows.filter(r => r.stage === 'couple_compared');
+      const avgPct = completed.length
+        ? Math.round(completed.reduce((s, r) => s + (Number(r.alignmentPct) || 0), 0) / completed.length)
+        : 0;
+
+      const counts = { A: 0, B: 0, C: 0, D: 0 };
+      rows.forEach(r => {
+        [r.p1Options, r.p2Options].forEach(seq => {
+          if (typeof seq === 'string') {
+            seq.split('').forEach(ch => { if (counts[ch] !== undefined) counts[ch]++; });
+          }
+        });
+      });
+      const archetypeNames = {
+        A: 'Bold & Dominant (A)',
+        B: 'Sensual & Teasing (B)',
+        C: 'Balanced & Mutual (C)',
+        D: 'Spontaneous & Primal (D)'
+      };
+      const topKey = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
+      const topArchetype = counts[topKey] > 0 ? archetypeNames[topKey] : 'No data yet';
+
+      const tableBody = rows.length === 0
+        ? `<tr><td colspan="6" style="text-align: center; padding: 24px; color: var(--text-dim);">No telemetry rows yet. Complete a session to populate live records!</td></tr>`
+        : rows.slice(0, 50).map(r => `
+            <tr>
+              <td style="font-family: var(--font-mono);">${escapeHtml(r.roomCode || r.sessionId)}</td>
+              <td>${escapeHtml(r.stage)}</td>
+              <td style="font-family: var(--font-mono);">${escapeHtml((r.questionIds || []).join(','))}</td>
+              <td style="font-family: var(--font-mono);">${escapeHtml(r.p1Options || '-')} / ${escapeHtml(r.p2Options || '-')}</td>
+              <td>${escapeHtml(r.p1Colour || '-')} &amp; ${escapeHtml(r.p2Colour || '-')}</td>
+              <td style="font-weight: 700; color: #6ee7b7;">${r.alignmentPct ? r.alignmentPct + '%' : '-'}</td>
+            </tr>
+          `).join('');
+
+      box.innerHTML = `
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div style="font-size: 0.68rem; text-transform: uppercase; color: var(--text-dim);">Total Records</div>
+            <div style="font-size: 1.5rem; font-weight: 700; margin-top: 4px;">${rows.length}</div>
+          </div>
+          <div class="kpi-card">
+            <div style="font-size: 0.68rem; text-transform: uppercase; color: var(--text-dim);">Completed Pairs</div>
+            <div style="font-size: 1.5rem; font-weight: 700; color: #6ee7b7; margin-top: 4px;">${completed.length}</div>
+          </div>
+          <div class="kpi-card">
+            <div style="font-size: 0.68rem; text-transform: uppercase; color: var(--text-dim);">Avg Alignment</div>
+            <div style="font-size: 1.5rem; font-weight: 700; color: #fde68a; margin-top: 4px;">${avgPct}%</div>
+          </div>
+          <div class="kpi-card">
+            <div style="font-size: 0.68rem; text-transform: uppercase; color: var(--text-dim);">Top Archetype</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #fda4af; margin-top: 6px;">${escapeHtml(topArchetype)}</div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+          <span style="font-size: 0.78rem; color: var(--text-muted);">Anonymized raw records (${cloudBridge.mode === 'cloud' ? 'Cloud + Local Synced' : 'Local Storage'})</span>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn-primary" style="width: auto; padding: 9px 15px; font-size: 0.8rem;" onclick="downloadTelemetry('csv')">Export CSV</button>
+            <button type="button" class="btn-secondary" style="width: auto; padding: 9px 15px; font-size: 0.8rem;" onclick="downloadTelemetry('json')">Export JSON</button>
+          </div>
+        </div>
+
+        <div style="overflow-x: auto; border: 1px solid var(--border-subtle); border-radius: 14px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Room ID</th>
+                <th>Stage</th>
+                <th>Questions</th>
+                <th>Options (P1/P2)</th>
+                <th>Colours</th>
+                <th>Align %</th>
+              </tr>
+            </thead>
+            <tbody>${tableBody}</tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function downloadTelemetry(fmt) {
+      const rows = readTelemetryRows();
+      if (!rows.length) {
+        showToast('No telemetry rows to export yet.');
+        return;
+      }
+      let content = '';
+      let mime = 'application/json';
+      let filename = `velvet_ember_telemetry_${Date.now()}.json`;
+
+      if (fmt === 'json') {
+        content = JSON.stringify(rows, null, 2);
+      } else {
+        mime = 'text/csv;charset=utf-8;';
+        filename = `velvet_ember_telemetry_${Date.now()}.csv`;
+        const cols = ['roomCode', 'timestamp', 'stage', 'questionIds', 'p1Options', 'p2Options', 'p1Colour', 'p2Colour', 'alignmentPct', 'durationSec'];
+        const lines = [cols.join(',')];
+        rows.forEach(r => {
+          lines.push(cols.map(c => {
+            const val = Array.isArray(r[c]) ? r[c].join('|') : (r[c] ?? '');
+            return `"${String(val).replace(/"/g, '""')}"`;
+          }).join(','));
+        });
+        content = lines.join('\n');
+      }
+
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast(`Downloaded ${rows.length} rows as ${fmt.toUpperCase()}.`);
+    }
+
+    /* =========================================================================
+       9. USER INTERACTION & ROOM ROUTING CONTROLLERS
+       ========================================================================= */
+    function openPrivacyModal() {
+      const m = document.getElementById('privacy-modal');
+      if (m) m.classList.add('open');
+    }
+
+    function closePrivacyModal() {
+      const m = document.getElementById('privacy-modal');
+      if (m) m.classList.remove('open');
+    }
+
+    function wipeActiveSession() {
+      closePrivacyModal();
+      stopRoomSubscription();
+      state.p1Name = '';
+      state.p2Name = '';
+      state.p1Answers = {};
+      state.p2Answers = {};
+      state.shareLink = '';
+      resetToWelcome();
+      showToast('Active session cleared.');
+    }
+
+    function shuffleDeck() {
+      const nameInp = document.getElementById('p1-name');
+      if (nameInp) state.p1Name = nameInp.value;
+      state.deckNumber = makeDeckNumber();
+      state.deckIds = drawNonRepeatingDeck(state.deckIds);
+      render();
+      showToast(`Drew Deck #${state.deckNumber}`);
+    }
+
+    function pickColour(partnerNum, colId) {
+      if (partnerNum === 1) {
+        const inp = document.getElementById('p1-name');
+        if (inp) state.p1Name = inp.value;
+        state.p1Colour = colId;
+      } else {
+        const inp = document.getElementById('p2-name') || document.getElementById('handoff-p2');
+        if (inp) state.p2Name = inp.value;
+        state.p2Colour = colId;
+      }
+      render();
+    }
+
+    function beginQuiz(mode) {
+      const nameInp = document.getElementById('p1-name');
+      const name = (nameInp ? nameInp.value : state.p1Name).trim();
+      if (!name) {
+        showToast('Please enter your name first.');
+        if (nameInp) nameInp.focus();
+        return;
+      }
+      stopRoomSubscription();
+      state.p1Name = name;
+      state.roomCode = makeRoomCode();
+      state.startedAt = Date.now();
+      state.mode = mode;
+      state.activePartner = 1;
+      state.qIndex = 0;
+      state.p1Answers = {};
+      state.p2Answers = {};
+      state.view = 'quiz';
+      render();
+    }
+
+    function applyCloudRoomSnapshot(data) {
+      if (!data || !data.p1Name || !Array.isArray(data.deckIds) || data.deckIds.length !== 5) return;
+
+      state.roomCode = data.roomCode || state.roomCode;
+      state.deckNumber = data.deckNumber || state.deckNumber;
+      state.deckIds = data.deckIds;
+      state.p1Name = String(data.p1Name).slice(0, 28);
+      state.p1Colour = COLOURS.some(c => c.id === data.p1Colour) ? data.p1Colour : 'crimson';
+      state.p1Answers = {};
+      data.deckIds.forEach((qid, idx) => {
+        state.p1Answers[qid] = (data.p1Seq || '')[idx];
+      });
+      state.shareLink = buildDirectRoomUrl(state.roomCode);
+
+      if (data.status === 'completed' && data.p2Name && data.p2Seq && data.p2Seq.length === 5) {
+        state.p2Name = String(data.p2Name).slice(0, 28);
+        state.p2Colour = COLOURS.some(c => c.id === data.p2Colour) ? data.p2Colour : 'ember';
+        state.p2Answers = {};
+        data.deckIds.forEach((qid, idx) => {
+          state.p2Answers[qid] = data.p2Seq[idx];
+        });
+        if (state.view !== 'results') {
+          state.view = 'results';
+          render();
+          showToast(`🔥 ${state.p2Name} finished! Results unlocked.`);
+        }
+        return;
+      }
+
+      // If Partner 1 is currently viewing the waiting screen, keep them there
+      if (state.view === 'share_invite') return;
+
+      // Otherwise Partner 2 opened the link
+      state.mode = 'link';
+      state.activePartner = 2;
+      state.p2Colour = state.p1Colour === 'ember' ? 'crimson' : 'ember';
+      state.view = 'p2_unlock';
+      render();
+    }
+
+    async function loadRoomByCode(rawCodeOrUrl) {
+      let code = String(rawCodeOrUrl || '').trim();
+      try {
+        if (code.includes('room=')) {
+          const u = new URL(code.startsWith('http') ? code : 'https://x.com/?' + code.split('?')[1]);
+          code = u.searchParams.get('room') || code;
+        }
+      } catch (e) {}
+      code = code.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+      if (!code) {
+        showToast('Enter a valid Room Code or link.');
+        return;
+      }
+
+      state.roomCode = code;
+      state.view = 'loading_room';
+      render();
+
+      const data = await cloudFetchRoom(code);
+      if (!data) {
+        showToast('Room not found yet. Check the link or start a new session.');
+        resetToWelcome();
+        return;
+      }
+
+      try {
+        const u = new URL(window.location.href.split('#')[0]);
+        u.searchParams.set('room', code);
+        window.history.replaceState(null, '', u.toString());
+      } catch (e) {}
+
+      applyCloudRoomSnapshot(data);
+      subscribeToRoom(code, applyCloudRoomSnapshot);
+    }
+
+    async function joinManualRoom() {
+      const inp = document.getElementById('manual-code-input');
+      const val = inp ? inp.value.trim() : '';
+      if (!val) {
+        showToast('Paste a room link or code first.');
+        return;
+      }
+      await loadRoomByCode(val);
+    }
+
+    function startPartner2Quiz() {
+      const inp = document.getElementById('p2-name');
+      const name = (inp ? inp.value : state.p2Name).trim();
+      if (!name) {
+        showToast('Please enter your name first.');
+        if (inp) inp.focus();
+        return;
+      }
+      state.p2Name = name;
+      state.activePartner = 2;
+      state.qIndex = 0;
+      state.p2Answers = {};
+      state.startedAt = Date.now();
+      state.view = 'quiz';
+      render();
+    }
+
+    function startPartner2Handoff() {
+      const inp = document.getElementById('handoff-p2');
+      const name = (inp ? inp.value : state.p2Name).trim();
+      if (!name) {
+        showToast('Please enter Partner 2’s name first.');
+        if (inp) inp.focus();
+        return;
+      }
+      state.p2Name = name;
+      state.mode = 'same_device';
+      state.activePartner = 2;
+      state.qIndex = 0;
+      state.p2Answers = {};
+      state.view = 'quiz';
+      render();
+    }
+
+    function openPartner2Directly() {
+      stopRoomSubscription();
+      state.mode = 'same_device';
+      state.p2Colour = state.p1Colour === 'ember' ? 'crimson' : 'ember';
+      state.view = 'handoff';
+      render();
+    }
+
+    function chooseOption(letter) {
+      const qid = state.deckIds[state.qIndex];
+      if (state.activePartner === 1) state.p1Answers[qid] = letter;
+      else state.p2Answers[qid] = letter;
+      render();
+    }
+
+    function goBackQuestion() {
+      if (state.qIndex > 0) {
+        state.qIndex--;
+      } else if (state.activePartner === 2) {
+        state.view = state.mode === 'link' ? 'p2_unlock' : 'handoff';
+      } else {
+        state.view = 'welcome';
+      }
+      render();
+    }
+
+    async function goForwardQuestion() {
+      const qid = state.deckIds[state.qIndex];
+      const ans = state.activePartner === 1 ? state.p1Answers : state.p2Answers;
+      if (!ans[qid]) return;
+
+      if (state.qIndex < 4) {
+        state.qIndex++;
+        render();
+        return;
+      }
+
+      const durationSec = Math.max(1, Math.round((Date.now() - state.startedAt) / 1000));
+      const p1Seq = state.deckIds.map(id => state.p1Answers[id]).join('');
+
+      if (state.activePartner === 1) {
+        state.shareLink = buildDirectRoomUrl(state.roomCode);
+        const roomPayload = {
+          roomCode: state.roomCode,
+          deckNumber: state.deckNumber,
+          deckIds: state.deckIds,
+          status: 'waiting_p2',
+          p1Name: state.p1Name,
+          p1Colour: state.p1Colour,
+          p1Seq,
+          p2Name: '',
+          p2Colour: '',
+          p2Seq: '',
+          updatedAt: Date.now()
+        };
+
+        await cloudSaveRoom(state.roomCode, roomPayload);
+        recordRawTelemetry({
+          roomCode: state.roomCode,
+          timestamp: Date.now(),
+          stage: 'partner1_sealed',
+          questionIds: state.deckIds,
+          p1Options: p1Seq,
+          p2Options: '',
+          p1Colour: state.p1Colour,
+          p2Colour: '',
+          alignmentPct: 0,
+          durationSec
+        });
+
+        try {
+          window.history.replaceState(null, '', state.shareLink);
+        } catch (e) {}
+
+        if (state.mode === 'link') {
+          state.view = 'share_invite';
+          render();
+          subscribeToRoom(state.roomCode, applyCloudRoomSnapshot);
+        } else {
+          state.p2Colour = state.p1Colour === 'ember' ? 'crimson' : 'ember';
+          state.view = 'handoff';
+          render();
+        }
+      } else {
+        const res = computeAlignment();
+        const p2Seq = state.deckIds.map(id => state.p2Answers[id]).join('');
+        state.shareLink = buildDirectRoomUrl(state.roomCode);
+
+        const completedPayload = {
+          roomCode: state.roomCode,
+          deckNumber: state.deckNumber,
+          deckIds: state.deckIds,
+          status: 'completed',
+          p1Name: state.p1Name,
+          p1Colour: state.p1Colour,
+          p1Seq,
+          p2Name: state.p2Name,
+          p2Colour: state.p2Colour,
+          p2Seq,
+          alignmentPct: res.pct,
+          updatedAt: Date.now()
+        };
+
+        await cloudSaveRoom(state.roomCode, completedPayload);
+        recordRawTelemetry({
+          roomCode: state.roomCode,
+          timestamp: Date.now(),
+          stage: 'couple_compared',
+          questionIds: state.deckIds,
+          p1Options: p1Seq,
+          p2Options: p2Seq,
+          p1Colour: state.p1Colour,
+          p2Colour: state.p2Colour,
+          alignmentPct: res.pct,
+          durationSec
+        });
+
+        try {
+          window.history.replaceState(null, '', state.shareLink);
+        } catch (e) {}
+
+        state.view = 'results';
+        render();
+        subscribeToRoom(state.roomCode, applyCloudRoomSnapshot);
+      }
+    }
+
+    function resetToWelcome() {
+      stopRoomSubscription();
+      state.roomCode = makeRoomCode();
+      state.deckNumber = makeDeckNumber();
+      state.deckIds = drawNonRepeatingDeck(state.deckIds);
+      state.view = 'welcome';
+      state.mode = 'link';
+      state.activePartner = 1;
+      state.qIndex = 0;
+      state.p1Answers = {};
+      state.p2Answers = {};
+      state.shareLink = '';
+      try {
+        const cleanUrl = window.location.pathname;
+        window.history.replaceState(null, '', cleanUrl);
+      } catch (e) {}
+      render();
+    }
+
+    /* =========================================================================
+       10. NON-BLOCKING FIREBASE CLOUD INIT + SYNCHRONOUS BOOTSTRAP
+       ========================================================================= */
+    async function initCloudEngine() {
+      try {
+        if (typeof __firebase_config === 'undefined' || !__firebase_config) {
+          cloudBridge.mode = 'offline';
+          updateCloudBadge();
+          return;
+        }
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        const [appMod, authMod, fsMod] = await Promise.all([
+          import('https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js'),
+          import('https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js'),
+          import('https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js')
+        ]);
+
+        const app = appMod.initializeApp(firebaseConfig);
+        const auth = authMod.getAuth(app);
+        const db = fsMod.getFirestore(app);
+
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await authMod.signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await authMod.signInAnonymously(auth);
+        }
+
+        cloudBridge.db = db;
+        cloudBridge.auth = auth;
+        cloudBridge.user = auth.currentUser;
+        cloudBridge.appId = appId;
+        cloudBridge.fns = fsMod;
+        cloudBridge.mode = 'cloud';
+        updateCloudBadge();
+
+        // Re-check room if opened via ?room= while cloud was initializing
+        const params = new URLSearchParams(window.location.search);
+        const roomParam = params.get('room');
+        if (roomParam) {
+          await loadRoomByCode(roomParam);
+        }
+      } catch (err) {
+        cloudBridge.mode = 'offline';
+        updateCloudBadge();
+      }
+    }
+
+    (function bootstrap() {
+      // 1. Render UI synchronously on first paint (zero freeze)
+      const params = new URLSearchParams(window.location.search);
+      const roomParam = params.get('room');
+      if (roomParam) {
+        state.roomCode = roomParam.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+        state.view = 'loading_room';
+      }
+      render();
+
+      // 2. Immediately attempt local mirror load so Partner 2 sees instant UI if cached
+      if (roomParam) {
+        const localData = readLocalRooms()[state.roomCode];
+        if (localData) {
+          applyCloudRoomSnapshot(localData);
+          subscribeToRoom(state.roomCode, applyCloudRoomSnapshot);
+        }
+      }
+
+      // 3. Connect Firebase Firestore asynchronously in background
+      initCloudEngine().then(() => {
+        if (roomParam && cloudBridge.mode === 'offline' && state.view === 'loading_room') {
+          loadRoomByCode(roomParam);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
